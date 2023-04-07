@@ -1,0 +1,79 @@
+{
+  "height": 4,
+  "widget": {
+    "title": "TPU Worker - Memory usage [MEAN]",
+    "xyChart": {
+      "chartOptions": {
+        "mode": "COLOR"
+      },
+      "dataSets": [
+        {
+          "minAlignmentPeriod": "60s",
+          "plotType": "LINE",
+          "targetAxis": "Y1",
+          "timeSeriesQuery": {
+            "timeSeriesFilter": {
+              "aggregation": {
+                "alignmentPeriod": "60s",
+                "perSeriesAligner": "ALIGN_MEAN"
+              },
+              "filter": "metric.type=\"tpu.googleapis.com/memory/usage\" resource.type=\"tpu_worker\"",
+              "secondaryAggregation": {
+                "alignmentPeriod": "60s",
+                "perSeriesAligner": "ALIGN_NONE"
+              }
+            }
+          }
+        }
+      ],
+      "thresholds": [],
+      "timeshiftDuration": "0s",
+      "yAxis": {
+        "label": "",
+        "scale": "LINEAR"
+      }
+    }
+  },
+  "width": 6,
+  "yPos": 4
+},
+{
+  "height": 4,
+  "widget": {
+    "title": "TPU Worker - Memory usage [MAX]",
+    "xyChart": {
+      "chartOptions": {
+        "mode": "COLOR"
+      },
+      "dataSets": [
+        {
+          "minAlignmentPeriod": "60s",
+          "plotType": "LINE",
+          "targetAxis": "Y1",
+          "timeSeriesQuery": {
+            "timeSeriesFilter": {
+              "aggregation": {
+                "alignmentPeriod": "60s",
+                "perSeriesAligner": "ALIGN_MAX"
+              },
+              "filter": "metric.type=\"tpu.googleapis.com/memory/usage\" resource.type=\"tpu_worker\"",
+              "secondaryAggregation": {
+                "alignmentPeriod": "60s",
+                "perSeriesAligner": "ALIGN_NONE"
+              }
+            }
+          }
+        }
+      ],
+      "thresholds": [],
+      "timeshiftDuration": "0s",
+      "yAxis": {
+        "label": "",
+        "scale": "LINEAR"
+      }
+    }
+  },
+  "width": 6,
+  "xPos": 6,
+  "yPos": 4
+}

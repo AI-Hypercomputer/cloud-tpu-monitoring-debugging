@@ -1,0 +1,79 @@
+{
+  "height": 4,
+  "widget": {
+    "title": "Tensorcore idle duration [MEAN]",
+    "xyChart": {
+      "chartOptions": {
+        "mode": "COLOR"
+      },
+      "dataSets": [
+        {
+          "minAlignmentPeriod": "60s",
+          "plotType": "LINE",
+          "targetAxis": "Y1",
+          "timeSeriesQuery": {
+            "timeSeriesFilter": {
+              "aggregation": {
+                "alignmentPeriod": "60s",
+                "perSeriesAligner": "ALIGN_MEAN"
+              },
+              "filter": "metric.type=\"tpu.googleapis.com/tpu/tensorcore/idle_duration\" resource.type=\"tpu_worker\"",
+              "secondaryAggregation": {
+                "alignmentPeriod": "60s",
+                "perSeriesAligner": "ALIGN_NONE"
+              }
+            }
+          }
+        }
+      ],
+      "thresholds": [],
+      "timeshiftDuration": "0s",
+      "yAxis": {
+        "label": "",
+        "scale": "LINEAR"
+      }
+    }
+  },
+  "width": 6,
+  "yPos": 8
+},
+{
+  "height": 4,
+  "widget": {
+    "title": "Tensorcore idle duration [MAX]",
+    "xyChart": {
+      "chartOptions": {
+        "mode": "COLOR"
+      },
+      "dataSets": [
+        {
+          "minAlignmentPeriod": "60s",
+          "plotType": "LINE",
+          "targetAxis": "Y1",
+          "timeSeriesQuery": {
+            "timeSeriesFilter": {
+              "aggregation": {
+                "alignmentPeriod": "60s",
+                "perSeriesAligner": "ALIGN_MAX"
+              },
+              "filter": "metric.type=\"tpu.googleapis.com/tpu/tensorcore/idle_duration\" resource.type=\"tpu_worker\"",
+              "secondaryAggregation": {
+                "alignmentPeriod": "60s",
+                "perSeriesAligner": "ALIGN_NONE"
+              }
+            }
+          }
+        }
+      ],
+      "thresholds": [],
+      "timeshiftDuration": "0s",
+      "yAxis": {
+        "label": "",
+        "scale": "LINEAR"
+      }
+    }
+  },
+  "width": 6,
+  "xPos": 6,
+  "yPos": 8
+}
