@@ -32,8 +32,12 @@ manual effort.
     the necessary plugins and build the `.terraform` directory.
 -   If there is an update to terraform google cloud provider version, run
     `terraform init --upgrade` for the update to take place.
--   Run `terraform apply` to deploy google cloud resources in your gcp project.
-    The command will prompt you to provide values for different input variables
-    like `project_name` that will be used to deploy the resources.
+-   Run `terraform apply -var outlier_count=<count of outliers for monitoring
+    dashboard> -var project_name="<name of gcp project>"` to deploy google cloud
+    resources in your gcp project. If `outlier_count` variable is missing from
+    the command, terraform will take the default value (10 in this case).
+-   You can also run `terraform apply` to deploy the resources that will prompt
+    you to provide values for different input variables with no default values
+    like `project_name` in this case. The command will use the default values set for other variables.
 -   You can also run `terraform plan` to validate resource declarations,
     identify any syntax errors, version mismatch etc.

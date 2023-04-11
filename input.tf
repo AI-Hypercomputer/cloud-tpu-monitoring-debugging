@@ -15,3 +15,9 @@ variable "project_name" {
    type = string
    description = "Name of gcp project"
 }
+
+variable "outlier_count" {
+   type = number
+   default = 10
+   description = "Number of outliers to show on monitoring dashboard (default=10)"
+}

@@ -1,7 +1,54 @@
 {
+  "height": 1,
+  "widget": {
+    "text": {
+      "content": "",
+      "format": "RAW"
+    },
+    "title": "Tensorcore Idle Duration of TPU Chip"
+  },
+  "width": 12,
+  "yPos": 18
+},
+{
   "height": 4,
   "widget": {
-    "title": "Tensorcore idle duration [MEAN]",
+    "title": "Tensorcore Idle Duration Stats",
+    "xyChart": {
+      "chartOptions": {
+        "mode": "STATS"
+      },
+      "dataSets": [
+        {
+          "minAlignmentPeriod": "60s",
+          "plotType": "LINE",
+          "targetAxis": "Y1",
+          "timeSeriesQuery": {
+            "timeSeriesFilter": {
+              "aggregation": {
+                "alignmentPeriod": "60s",
+                "perSeriesAligner": "ALIGN_NONE"
+              },
+              "filter": "metric.type=\"tpu.googleapis.com/tpu/tensorcore/idle_duration\" resource.type=\"tpu_worker\""
+            }
+          }
+        }
+      ],
+      "thresholds": [],
+      "timeshiftDuration": "0s",
+      "yAxis": {
+        "label": "",
+        "scale": "LINEAR"
+      }
+    }
+  },
+  "width": 12,
+  "yPos": 19
+},
+{
+  "height": 4,
+  "widget": {
+    "title": "Tensorcore Idle Duration Outliers [MEAN]",
     "xyChart": {
       "chartOptions": {
         "mode": "COLOR"
@@ -18,9 +65,10 @@
                 "perSeriesAligner": "ALIGN_MEAN"
               },
               "filter": "metric.type=\"tpu.googleapis.com/tpu/tensorcore/idle_duration\" resource.type=\"tpu_worker\"",
-              "secondaryAggregation": {
-                "alignmentPeriod": "60s",
-                "perSeriesAligner": "ALIGN_NONE"
+              "pickTimeSeriesFilter": {
+                "direction": "TOP",
+                "numTimeSeries": ${OUTLIER_COUNT},
+                "rankingMethod": "METHOD_MEAN"
               }
             }
           }
@@ -35,12 +83,12 @@
     }
   },
   "width": 6,
-  "yPos": 8
+  "yPos": 23
 },
 {
   "height": 4,
   "widget": {
-    "title": "Tensorcore idle duration [MAX]",
+    "title": "Tensorcore Idle Duration Outliers [MAX]",
     "xyChart": {
       "chartOptions": {
         "mode": "COLOR"
@@ -57,9 +105,10 @@
                 "perSeriesAligner": "ALIGN_MAX"
               },
               "filter": "metric.type=\"tpu.googleapis.com/tpu/tensorcore/idle_duration\" resource.type=\"tpu_worker\"",
-              "secondaryAggregation": {
-                "alignmentPeriod": "60s",
-                "perSeriesAligner": "ALIGN_NONE"
+              "pickTimeSeriesFilter": {
+                "direction": "TOP",
+                "numTimeSeries": ${OUTLIER_COUNT},
+                "rankingMethod": "METHOD_MAX"
               }
             }
           }
@@ -75,5 +124,5 @@
   },
   "width": 6,
   "xPos": 6,
-  "yPos": 8
+  "yPos": 23
 }

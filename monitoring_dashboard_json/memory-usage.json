@@ -1,7 +1,54 @@
 {
+  "height": 1,
+  "widget": {
+    "text": {
+      "content": "",
+      "format": "RAW"
+    },
+    "title": "Memory Usage by TPU VM"
+  },
+  "width": 12,
+  "yPos": 9
+},
+{
   "height": 4,
   "widget": {
-    "title": "TPU Worker - Memory usage [MEAN]",
+    "title": "TPU VM - Memory Usage Stats",
+    "xyChart": {
+      "chartOptions": {
+        "mode": "STATS"
+      },
+      "dataSets": [
+        {
+          "minAlignmentPeriod": "60s",
+          "plotType": "LINE",
+          "targetAxis": "Y1",
+          "timeSeriesQuery": {
+            "timeSeriesFilter": {
+              "aggregation": {
+                "alignmentPeriod": "60s",
+                "perSeriesAligner": "ALIGN_NONE"
+              },
+              "filter": "metric.type=\"tpu.googleapis.com/memory/usage\" resource.type=\"tpu_worker\""
+            }
+          }
+        }
+      ],
+      "thresholds": [],
+      "timeshiftDuration": "0s",
+      "yAxis": {
+        "label": "",
+        "scale": "LINEAR"
+      }
+    }
+  },
+  "width": 12,
+  "yPos": 10
+},
+{
+  "height": 4,
+  "widget": {
+    "title": "TPU VM - Memory Usage Outliers [MEAN]",
     "xyChart": {
       "chartOptions": {
         "mode": "COLOR"
@@ -18,9 +65,10 @@
                 "perSeriesAligner": "ALIGN_MEAN"
               },
               "filter": "metric.type=\"tpu.googleapis.com/memory/usage\" resource.type=\"tpu_worker\"",
-              "secondaryAggregation": {
-                "alignmentPeriod": "60s",
-                "perSeriesAligner": "ALIGN_NONE"
+              "pickTimeSeriesFilter": {
+                "direction": "TOP",
+                "numTimeSeries": ${OUTLIER_COUNT},
+                "rankingMethod": "METHOD_MEAN"
               }
             }
           }
@@ -35,12 +83,12 @@
     }
   },
   "width": 6,
-  "yPos": 4
+  "yPos": 14
 },
 {
   "height": 4,
   "widget": {
-    "title": "TPU Worker - Memory usage [MAX]",
+    "title": "TPU VM - Memory Usage Outliers [MAX]",
     "xyChart": {
       "chartOptions": {
         "mode": "COLOR"
@@ -57,9 +105,10 @@
                 "perSeriesAligner": "ALIGN_MAX"
               },
               "filter": "metric.type=\"tpu.googleapis.com/memory/usage\" resource.type=\"tpu_worker\"",
-              "secondaryAggregation": {
-                "alignmentPeriod": "60s",
-                "perSeriesAligner": "ALIGN_NONE"
+              "pickTimeSeriesFilter": {
+                "direction": "TOP",
+                "numTimeSeries": ${OUTLIER_COUNT},
+                "rankingMethod": "METHOD_MAX"
               }
             }
           }
@@ -75,5 +124,5 @@
   },
   "width": 6,
   "xPos": 6,
-  "yPos": 4
+  "yPos": 14
 }
