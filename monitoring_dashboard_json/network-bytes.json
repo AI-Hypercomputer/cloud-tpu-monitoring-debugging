@@ -55,6 +55,7 @@
       },
       "dataSets": [
         {
+          "legendTemplate": "TPU Node: $${resource.labels.node_id} Worker ID: $${resource.labels.worker_id}",
           "minAlignmentPeriod": "60s",
           "plotType": "LINE",
           "targetAxis": "Y1",
@@ -95,6 +96,7 @@
       },
       "dataSets": [
         {
+          "legendTemplate": "TPU Node: $${resource.labels.node_id} Worker ID: $${resource.labels.worker_id}",
           "minAlignmentPeriod": "60s",
           "plotType": "LINE",
           "targetAxis": "Y1",
@@ -171,6 +173,7 @@
       },
       "dataSets": [
         {
+          "legendTemplate": "TPU Node: $${resource.labels.node_id} Worker ID: $${resource.labels.worker_id}",
           "minAlignmentPeriod": "60s",
           "plotType": "LINE",
           "targetAxis": "Y1",
@@ -211,6 +214,7 @@
       },
       "dataSets": [
         {
+          "legendTemplate": "TPU Node: $${resource.labels.node_id} Worker ID: $${resource.labels.worker_id}",
           "minAlignmentPeriod": "60s",
           "plotType": "LINE",
           "targetAxis": "Y1",
