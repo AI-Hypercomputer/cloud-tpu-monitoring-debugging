@@ -14,16 +14,16 @@
  limitations under the License.
  -->
 
-# TpuMonitoringDebugging
-
 ## Overview
-
+Cloud TPU Monitoring Debugging repository contains all the infrastructure and logic 
+required to monitor and debug jobs running on Cloud TPU. Terraform is used to deploy
+resources in google cloud project.
 Terraform is an open-source tool to set up and manage google cloud
 infrastructure based on configuration files. This repository will help the
 customers to deploy various google cloud resources via script, without any
 manual effort.
 
-## Getting Started
+## Getting Started with Terraform
 
 -   Install Terraform on desktop:
     https://developer.hashicorp.com/terraform/tutorials/gcp-get-started/install-cli
