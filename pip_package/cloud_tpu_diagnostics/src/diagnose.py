@@ -12,4 +12,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cloud_tpu_diagnostics import diagnostic
+import contextlib
+
+from cloud_tpu_diagnostics.src.debug import start_debugging
+from cloud_tpu_diagnostics.src.debug import stop_debugging
+
+
+@contextlib.contextmanager
+def diagnose():
+  """Context manager to debug and identify errors."""
+  start_debugging()
+  try:
+    yield
+  finally:
+    stop_debugging()

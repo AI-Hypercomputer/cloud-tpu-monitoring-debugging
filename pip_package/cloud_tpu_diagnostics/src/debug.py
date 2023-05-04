@@ -12,4 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cloud_tpu_diagnostics import diagnostic
+from cloud_tpu_diagnostics.src.config import config
+from cloud_tpu_diagnostics.src.stack_trace import disable_stack_trace_dumping
+from cloud_tpu_diagnostics.src.stack_trace import enable_stack_trace_dumping
+
+
+def start_debugging():
+  """Context manager to debug and identify errors."""
+  if config.collect_stack_trace:
+    enable_stack_trace_dumping(config.stack_trace_dir)
+
+
+def stop_debugging():
+  """Context manager to debug and identify errors."""
+  if config.collect_stack_trace:
+    disable_stack_trace_dumping()
