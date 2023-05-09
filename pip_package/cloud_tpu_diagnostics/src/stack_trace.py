@@ -38,11 +38,11 @@ def enable_stack_trace_dumping(stack_trace_dir):
     logger.info("Stack trace will be written in: %s", stack_trace_file)
 
     # Enables faulthandler for SIGSEGV, SIGFPE, SIGABRT, SIGBUS and SIGILL
-    faulthandler.enable(file=_stack_trace_file_obj, all_threads=True)
+    faulthandler.enable(file=_stack_trace_file_obj, all_threads=False)
 
     # Register SIGUSR1 signal to faulthandler
     faulthandler.register(
-        signal.SIGUSR1, all_threads=True, file=_stack_trace_file_obj
+        signal.SIGUSR1, all_threads=False, file=_stack_trace_file_obj
     )
   except Exception as e:  # pylint: disable=broad-exception-caught
     logger.error("Error in enabling dumping of stack trace.", e)

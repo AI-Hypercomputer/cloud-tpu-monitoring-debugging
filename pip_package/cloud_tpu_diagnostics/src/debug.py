@@ -12,6 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import signal
+import threading
+import time
+
 from cloud_tpu_diagnostics.src.config import config
 from cloud_tpu_diagnostics.src.stack_trace import disable_stack_trace_dumping
 from cloud_tpu_diagnostics.src.stack_trace import enable_stack_trace_dumping
@@ -20,6 +24,8 @@ from cloud_tpu_diagnostics.src.stack_trace import enable_stack_trace_dumping
 def start_debugging():
   """Context manager to debug and identify errors."""
   if config.collect_stack_trace:
+    thread = threading.Thread(target=send_user_signal, daemon=True)
+    thread.start()  # start a daemon thread
     enable_stack_trace_dumping(config.stack_trace_dir)
 
 
@@ -27,3 +33,12 @@ def stop_debugging():
   """Context manager to debug and identify errors."""
   if config.collect_stack_trace:
     disable_stack_trace_dumping()
+
+
+def send_user_signal():
+  """Send SIGUSR1 signal to non-daemon threads after every 10 minutes."""
+  while True:
+    time.sleep(600)  # sleep for 10 minutes
+    for thread in threading.enumerate():
+      if not thread.daemon:
+        signal.pthread_kill(thread.ident, signal.SIGUSR1)

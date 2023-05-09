@@ -105,7 +105,7 @@ class StackTraceTest(absltest.TestCase):
     self.assertFalse(os.path.isdir('/test/debugging'))
 
   def check_fatal_error(self, line_number, error, signal_name):
-    header = r'Current thread 0x[0-9a-f]+ \(most recent call first\)'
+    header = r'Stack \(most recent call first\)'
     regex = ''
     if error:
       regex = """
