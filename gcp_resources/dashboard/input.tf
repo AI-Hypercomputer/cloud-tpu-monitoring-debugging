@@ -12,17 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-terraform {
-  required_providers {
-    google = {
-      source  = "hashicorp/google"
-      version = ">= 4.57.0"
-    }
-  }
+variable "project_name" {
+  type        = string
+  description = "Name of gcp project"
 }
 
-module "dashboard" {
-  source = "./dashboard"
-  project_name = var.project_name
-  outlier_count = var.outlier_count
+variable "outlier_count" {
+  type        = number
+  default     = 10
+  description = "Number of outliers to show on monitoring dashboard (default=10)"
 }
