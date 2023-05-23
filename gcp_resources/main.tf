@@ -22,7 +22,13 @@ terraform {
 }
 
 module "dashboard" {
-  source = "./dashboard"
-  project_name = var.project_name
+  source        = "./dashboard"
+  project_name  = var.project_name
   outlier_count = var.outlier_count
+}
+
+module "log_storage" {
+  source                    = "./log_storage"
+  project_name              = var.project_name
+  stack_trace_bucket_config = var.stack_trace_bucket_config
 }
