@@ -16,22 +16,27 @@ import signal
 import threading
 import time
 
-from cloud_tpu_diagnostics.src.config import config
 from cloud_tpu_diagnostics.src.stack_trace import disable_stack_trace_dumping
 from cloud_tpu_diagnostics.src.stack_trace import enable_stack_trace_dumping
 
 
-def start_debugging():
+def start_debugging(debug_config):
   """Context manager to debug and identify errors."""
-  if config.collect_stack_trace:
+  if (
+      debug_config.stack_trace_config is not None
+      and debug_config.stack_trace_config.collect_stack_trace
+  ):
     thread = threading.Thread(target=send_user_signal, daemon=True)
     thread.start()  # start a daemon thread
-    enable_stack_trace_dumping(config.stack_trace_dir)
+    enable_stack_trace_dumping(debug_config.stack_trace_config)
 
 
-def stop_debugging():
+def stop_debugging(debug_config):
   """Context manager to debug and identify errors."""
-  if config.collect_stack_trace:
+  if (
+      debug_config.stack_trace_config is not None
+      and debug_config.stack_trace_config.collect_stack_trace
+  ):
     disable_stack_trace_dumping()
 
 

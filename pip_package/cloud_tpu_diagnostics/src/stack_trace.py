@@ -16,26 +16,33 @@ import faulthandler
 import logging
 import os
 import signal
+import sys
 import time
+
+from cloud_tpu_diagnostics.src.util import default
 
 _stack_trace_file_obj = None
 logger = logging.getLogger(__name__)
 
 
-def enable_stack_trace_dumping(stack_trace_dir):
+def enable_stack_trace_dumping(stack_trace_config):
   """Enables stack trace dumping.
 
   Enables faulthandler and register SIGSEGV, SIGFPE, SIGABRT,
   SIGBUS, SIGILL and SIGUSR1 to collect stack trace.
 
   Args:
-    stack_trace_dir: directory to store stack trace
+    stack_trace_config: configuration object for stack trace collection
   """
   try:
     global _stack_trace_file_obj
-    stack_trace_file = _get_stack_trace_file(stack_trace_dir)
-    _stack_trace_file_obj = open(stack_trace_file, "wb")
-    logger.info("Stack trace will be written in: %s", stack_trace_file)
+    if stack_trace_config.stack_trace_to_cloud:
+      stack_trace_file = _get_stack_trace_file()
+      _stack_trace_file_obj = open(stack_trace_file, "wb")
+      logger.info("Stack trace will be written in: %s", stack_trace_file)
+    else:
+      _stack_trace_file_obj = sys.stderr
+      logger.info("Stack trace will be written to the console.")
 
     # Enables faulthandler for SIGSEGV, SIGFPE, SIGABRT, SIGBUS and SIGILL
     faulthandler.enable(file=_stack_trace_file_obj, all_threads=False)
@@ -62,20 +69,16 @@ def disable_stack_trace_dumping():
     logger.error("Error in disabling dumping of stack trace.", e)
 
 
-def _get_stack_trace_file(trace_dir):
+def _get_stack_trace_file():
   """Prefix stack trace file.
 
   Create a file with prefix as stack_trace_ and current local time in
-  '%Y_%m_%d_%H_%M_%S' format inside debugging folder in trace_dir.
-
-  Args:
-    trace_dir: directory to store stack trace
+  '%Y_%m_%d_%H_%M_%S' format inside default.STACK_TRACE_DIR_DEFAULT.
 
   Returns:
     path of stack trace file
   """
-  curr_path = os.path.abspath(trace_dir)
-  root_trace_folder = os.path.join(curr_path, "debugging")
+  root_trace_folder = os.path.abspath(default.STACK_TRACE_DIR_DEFAULT)
   if not os.path.exists(root_trace_folder):
     os.makedirs(root_trace_folder)
 

@@ -12,19 +12,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import contextlib
+import dataclasses
+from typing import Optional
+from cloud_tpu_diagnostics.src.config import debug_configuration
 
-from cloud_tpu_diagnostics.src.debug import start_debugging
-from cloud_tpu_diagnostics.src.debug import stop_debugging
 
+@dataclasses.dataclass
+class DiagnosticConfig:
+  """Configuration for diagnostic.
 
-@contextlib.contextmanager
-def diagnose(config):
-  """Context manager to debug and identify errors."""
-  if config is not None and config.debug_config is not None:
-    start_debugging(config.debug_config)
-  try:
-    yield
-  finally:
-    if config is not None and config.debug_config is not None:
-      stop_debugging(config.debug_config)
+  Attributes:
+    debug_config: config object for debugging, default is None
+  """
+
+  debug_config: Optional[debug_configuration.DebugConfig] = None

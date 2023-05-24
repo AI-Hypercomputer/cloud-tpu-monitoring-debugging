@@ -13,14 +13,14 @@
 # limitations under the License.
 
 import os
+import shutil
 import signal
 import subprocess
 import sys
-import tempfile
 import textwrap
 import unittest
 from absl.testing import absltest
-
+from cloud_tpu_diagnostics.src.util import default
 
 class StackTraceTest(absltest.TestCase):
 
@@ -36,75 +36,65 @@ class StackTraceTest(absltest.TestCase):
 
   def tearDown(self):
     super().tearDown()
-    os.environ.pop('COLLECT_STACK_TRACE', None)
-    os.environ.pop('STACK_TRACE_DIR', None)
+    if os.path.exists(default.STACK_TRACE_DIR_DEFAULT):
+      shutil.rmtree(default.STACK_TRACE_DIR_DEFAULT)
 
   @unittest.skipIf(not hasattr(signal, 'SIGSEGV'), 'Missing signal.SIGSEGV')
-  def testSigsegvCollectStackTraceTrueTraceCollected(self):
+  def testSigsegvCollectStackTraceTrueTraceCollectedOnCloud(self):
     error = 'Fatal Python error: Segmentation fault'
-    self.check_fatal_error(31, error, 'SIGSEGV')
+    self.check_fatal_error(51, error, 'SIGSEGV', True)
 
   @unittest.skipIf(not hasattr(signal, 'SIGABRT'), 'Missing signal.SIGABRT')
-  def testSigabrtCollectStackTraceTrueTraceCollected(self):
+  def testSigabrtCollectStackTraceTrueTraceCollectedOnCloud(self):
     error = 'Fatal Python error: Aborted'
-    self.check_fatal_error(34, error, 'SIGABRT')
+    self.check_fatal_error(54, error, 'SIGABRT', True)
 
   @unittest.skipIf(not hasattr(signal, 'SIGFPE'), 'Missing signal.SIGFPE')
-  def testSigfpeCollectStackTraceTrueTraceCollected(self):
+  def testSigfpeCollectStackTraceTrueTraceCollectedOnCloud(self):
     error = 'Fatal Python error: Floating point exception'
-    self.check_fatal_error(37, error, 'SIGFPE')
+    self.check_fatal_error(57, error, 'SIGFPE', True)
 
   @unittest.skipIf(not hasattr(signal, 'SIGILL'), 'Missing signal.SIGILL')
-  def testSigillCollectStackTraceTrueTraceCollected(self):
+  def testSigillCollectStackTraceTrueTraceCollectedOnCloud(self):
     error = 'Fatal Python error: Illegal instruction'
-    self.check_fatal_error(40, error, 'SIGILL')
+    self.check_fatal_error(60, error, 'SIGILL', True)
 
   @unittest.skipIf(not hasattr(signal, 'SIGBUS'), 'Missing signal.SIGBUS')
-  def testSigbusCollectStackTraceTrueTraceCollected(self):
+  def testSigbusCollectStackTraceTrueTraceCollectedOnCloud(self):
     error = 'Fatal Python error: Bus error'
-    self.check_fatal_error(43, error, 'SIGBUS')
+    self.check_fatal_error(63, error, 'SIGBUS', True)
 
   @unittest.skipIf(not hasattr(signal, 'SIGUSR1'), 'Missing signal.SIGUSR1')
-  def testSigusrCollectStackTraceTrueTraceCollected(self):
-    self.check_fatal_error(46, '', 'SIGUSR1')
+  def testSigusrCollectStackTraceTrueTraceCollectedOnCloud(self):
+    self.check_fatal_error(66, '', 'SIGUSR1', True)
 
-  def testNoFaultCollectStackTraceTrueNoTraceCollected(self):
-    trace_dir = tempfile.mkdtemp()
-    self.set_env_variables(trace_dir)
-    output = self.get_output('', trace_dir)
+  def testNoFaultCollectStackTraceTrueNoTraceCollectedOnCloud(self):
+    output, stderr = self.get_output('', True, True)
     self.assertEqual(output, '')
+    self.assertEqual(stderr, '')
 
   def testCollectStackTraceFalseNoTraceDirCreated(self):
-    trace_dir = tempfile.mkdtemp()
-    process = self.run_python_code('', trace_dir)
-    _, _ = process.communicate()
-    self.assertEmpty(os.listdir((trace_dir)))
-
-  def testInvalidCollectStackTraceSetValueError(self):
-    os.environ['COLLECT_STACK_TRACE'] = 'rue'
-    trace_dir = tempfile.mkdtemp()
-    process = self.run_python_code('', trace_dir)
+    process = self.run_python_code('', False, True)
     _, stderr = process.communicate()
-    self.assertNotEmpty(stderr)
+    self.assertFalse(os.path.exists(default.STACK_TRACE_DIR_DEFAULT))
+    self.assertEmpty(stderr)
 
-  def testStackTraceDirUnsetTraceCollectedInDefaultDir(self):
-    os.environ['COLLECT_STACK_TRACE'] = 'True'
-    trace_dir = tempfile.mkdtemp()
-    process = self.run_python_code('', trace_dir)
-    _, _ = process.communicate()
-    self.assertEmpty(os.listdir((trace_dir)))
-    self.assertTrue(os.path.isdir('/tmp/debugging'))
+  @unittest.skipIf(not hasattr(signal, 'SIGUSR1'), 'Missing signal.SIGUSR1')
+  def testCollectStackTraceToConsole(self):
+    self.check_fatal_error(66, '', 'SIGUSR1', False)
 
-  def testStackTraceDirNotPresentTraceNotCollected(self):
-    os.environ['COLLECT_STACK_TRACE'] = 'True'
-    os.environ['STACK_TRACE_DIR'] = '/test'
-    trace_dir = tempfile.mkdtemp()
-    process = self.run_python_code('', trace_dir)
+  def testNoFaultCollectStackTraceTrueNoTraceCollectedOnConsole(self):
+    output, stderr = self.get_output('', True, False)
+    self.assertEqual(output, '')
+    self.assertEqual(stderr, '')
+
+  def testCollectStackTraceFalseNoTraceCollectedOnConsole(self):
+    process = self.run_python_code('', False, False)
     _, stderr = process.communicate()
-    self.assertNotEmpty(stderr)
-    self.assertFalse(os.path.isdir('/test/debugging'))
+    self.assertEmpty(stderr)
+    self.assertFalse(os.path.exists(default.STACK_TRACE_DIR_DEFAULT))
 
-  def check_fatal_error(self, line_number, error, signal_name):
+  def check_fatal_error(self, line_number, error, signal_name, log_to_cloud):
     header = r'Stack \(most recent call first\)'
     regex = ''
     if error:
@@ -126,28 +116,35 @@ class StackTraceTest(absltest.TestCase):
         .strip()
     )
 
-    trace_dir = tempfile.mkdtemp()
-    self.set_env_variables(trace_dir)
-    output = self.get_output(signal_name, trace_dir)
-    self.assertRegex(output, regex)
+    output, stderr = self.get_output(signal_name, True, log_to_cloud)
+    if log_to_cloud:
+      self.assertRegex(output, regex)
+      self.assertEmpty(stderr)
+    else:
+      self.assertRegex(stderr, regex)
+      self.assertEmpty(output)
 
-  def set_env_variables(self, trace_dir):
-    os.environ['COLLECT_STACK_TRACE'] = 'True'
-    os.environ['STACK_TRACE_DIR'] = trace_dir
-
-  def get_output(self, signal_name, trace_dir):
-    process = self.run_python_code(signal_name, trace_dir)
-    _, _ = process.communicate()
-    trace_file = os.listdir(trace_dir + '/debugging')
+  def get_output(self, signal_name, collect_stack_trace, log_to_cloud):
+    process = self.run_python_code(
+        signal_name, collect_stack_trace, log_to_cloud
+    )
+    _, stderr = process.communicate()
+    stderr = stderr.decode('ascii', 'backslashreplace')
     output = ''
-    if trace_file:
-      stack_trace_file = trace_dir + '/debugging/' + trace_file[0]
-      with open(stack_trace_file, 'rb') as fp:
-        output = fp.read().decode('ascii', 'backslashreplace')
-    return output
+    if log_to_cloud:
+      trace_file = os.listdir(default.STACK_TRACE_DIR_DEFAULT)
+      if trace_file:
+        stack_trace_file = default.STACK_TRACE_DIR_DEFAULT + trace_file[0]
+        with open(stack_trace_file, 'rb') as fp:
+          output = fp.read().decode('ascii', 'backslashreplace')
+    return output, stderr
 
-  def run_python_code(self, signal_name, trace_dir):
-    args = ['--signal=' + signal_name, '--trace_dir=' + trace_dir]
+  def run_python_code(self, signal_name, collect_stack_trace, log_to_cloud):
+    args = [
+        '--signal=' + signal_name,
+        '--collect_stack_trace=' + str(collect_stack_trace),
+        '--log_to_cloud=' + str(log_to_cloud),
+    ]
     if sys.executable is not None:
       code = [sys.executable, self.test_file]
     else:

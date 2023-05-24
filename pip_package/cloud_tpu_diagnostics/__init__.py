@@ -12,4 +12,5 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from cloud_tpu_diagnostics import configuration
 from cloud_tpu_diagnostics import diagnostic

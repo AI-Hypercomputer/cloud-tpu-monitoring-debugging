@@ -18,15 +18,35 @@ import argparse
 import signal
 
 from cloud_tpu_diagnostics import diagnostic
+from cloud_tpu_diagnostics.configuration import debug_configuration
+from cloud_tpu_diagnostics.configuration import diagnostic_configuration
+from cloud_tpu_diagnostics.configuration import stack_trace_configuration
 
 
 if __name__ == '__main__':
   parser = argparse.ArgumentParser()
   parser.add_argument('--signal', help='name of signal to raise')
-  parser.add_argument('--trace_dir', help='path of trace directory')
+  parser.add_argument(
+      '--collect_stack_trace',
+      type=lambda x: (x.lower() == 'true'),
+      help='whether to collect stack trace or not',
+  )
+  parser.add_argument(
+      '--log_to_cloud',
+      type=lambda x: (x.lower() == 'true'),
+      help='whether to log to cloud or console',
+  )
   args = parser.parse_args()
-
-  with diagnostic.diagnose():
+  debug_config = debug_configuration.DebugConfig(
+      stack_trace_config=stack_trace_configuration.StackTraceConfig(
+          collect_stack_trace=args.collect_stack_trace,
+          stack_trace_to_cloud=args.log_to_cloud,
+      ),
+  )
+  diagnostic_config = diagnostic_configuration.DiagnosticConfig(
+      debug_config=debug_config
+  )
+  with diagnostic.diagnose(diagnostic_config):
     if args.signal == 'SIGSEGV':
       signal.raise_signal(signal.SIGSEGV)
 

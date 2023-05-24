@@ -12,19 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import contextlib
-
-from cloud_tpu_diagnostics.src.debug import start_debugging
-from cloud_tpu_diagnostics.src.debug import stop_debugging
-
-
-@contextlib.contextmanager
-def diagnose(config):
-  """Context manager to debug and identify errors."""
-  if config is not None and config.debug_config is not None:
-    start_debugging(config.debug_config)
-  try:
-    yield
-  finally:
-    if config is not None and config.debug_config is not None:
-      stop_debugging(config.debug_config)
+# Stack trace default values
+COLLECT_STACK_TRACE_DEFAULT = False
+STACK_TRACE_TO_CLOUD_DEFAULT = False
+STACK_TRACE_DIR_DEFAULT = '/tmp/debugging/'

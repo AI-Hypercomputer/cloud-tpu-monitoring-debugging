@@ -12,19 +12,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import contextlib
+import dataclasses
+from typing import Optional
+from cloud_tpu_diagnostics.src.config import stack_trace_configuration
 
-from cloud_tpu_diagnostics.src.debug import start_debugging
-from cloud_tpu_diagnostics.src.debug import stop_debugging
 
+@dataclasses.dataclass
+class DebugConfig:
+  """Configuration for debugging.
 
-@contextlib.contextmanager
-def diagnose(config):
-  """Context manager to debug and identify errors."""
-  if config is not None and config.debug_config is not None:
-    start_debugging(config.debug_config)
-  try:
-    yield
-  finally:
-    if config is not None and config.debug_config is not None:
-      stop_debugging(config.debug_config)
+  Attributes:
+    stack_trace_config: config object for stack trace collection, default is
+      None
+  """
+
+  stack_trace_config: Optional[stack_trace_configuration.StackTraceConfig] = (
+      None
+  )
