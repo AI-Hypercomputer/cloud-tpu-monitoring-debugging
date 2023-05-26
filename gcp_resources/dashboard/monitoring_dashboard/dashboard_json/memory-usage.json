@@ -1,16 +1,4 @@
 {
-  "height": 1,
-  "widget": {
-    "text": {
-      "content": "",
-      "format": "RAW"
-    },
-    "title": "Memory Usage by TPU VM"
-  },
-  "width": 12,
-  "yPos": 9
-},
-{
   "height": 4,
   "widget": {
     "title": "TPU VM - Memory Usage Stats",
@@ -43,7 +31,7 @@
     }
   },
   "width": 12,
-  "yPos": 10
+  "yPos": 8
 },
 {
   "height": 4,
@@ -84,7 +72,7 @@
     }
   },
   "width": 6,
-  "yPos": 14
+  "yPos": 12
 },
 {
   "height": 4,
@@ -126,5 +114,16 @@
   },
   "width": 6,
   "xPos": 6,
-  "yPos": 14
+  "yPos": 12
+},
+{
+  "height": 8,
+  "widget": {
+    "collapsibleGroup": {
+      "collapsed": false
+    },
+    "title": "Memory Usage by TPU VM"
+  },
+  "width": 12,
+  "yPos": 8
 }

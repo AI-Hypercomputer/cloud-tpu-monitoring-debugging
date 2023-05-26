@@ -1,16 +1,4 @@
 {
-  "height": 1,
-  "widget": {
-    "text": {
-      "content": "",
-      "format": "RAW"
-    },
-    "title": "Tensorcore Idle Duration of TPU Chip"
-  },
-  "width": 12,
-  "yPos": 18
-},
-{
   "height": 4,
   "widget": {
     "title": "Tensorcore Idle Duration Stats",
@@ -43,7 +31,7 @@
     }
   },
   "width": 12,
-  "yPos": 19
+  "yPos": 16
 },
 {
   "height": 4,
@@ -84,7 +72,7 @@
     }
   },
   "width": 6,
-  "yPos": 23
+  "yPos": 20
 },
 {
   "height": 4,
@@ -126,5 +114,16 @@
   },
   "width": 6,
   "xPos": 6,
-  "yPos": 23
+  "yPos": 20
+},
+{
+  "height": 8,
+  "widget": {
+    "collapsibleGroup": {
+      "collapsed": false
+    },
+    "title": "Tensorcore Idle Duration of TPU Chip"
+  },
+  "width": 12,
+  "yPos": 16
 }

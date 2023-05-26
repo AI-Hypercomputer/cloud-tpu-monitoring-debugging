@@ -1,16 +1,4 @@
 {
-  "height": 1,
-  "widget": {
-    "text": {
-      "content": "",
-      "format": "RAW"
-    },
-    "title": "Network Bytes Received and Sent by TPU VM"
-  },
-  "width": 12,
-  "yPos": 27
-},
-{
   "height": 4,
   "widget": {
     "title": "TPU VM - Network Bytes Sent Stats",
@@ -43,7 +31,7 @@
     }
   },
   "width": 12,
-  "yPos": 28
+  "yPos": 24
 },
 {
   "height": 4,
@@ -84,7 +72,7 @@
     }
   },
   "width": 6,
-  "yPos": 32
+  "yPos": 28
 },
 {
   "height": 4,
@@ -126,7 +114,7 @@
   },
   "width": 6,
   "xPos": 6,
-  "yPos": 32
+  "yPos": 28
 },
 {
   "height": 4,
@@ -161,7 +149,7 @@
     }
   },
   "width": 12,
-  "yPos": 36
+  "yPos": 32
 },
 {
   "height": 4,
@@ -202,7 +190,7 @@
     }
   },
   "width": 6,
-  "yPos": 40
+  "yPos": 36
 },
 {
   "height": 4,
@@ -244,5 +232,16 @@
   },
   "width": 6,
   "xPos": 6,
-  "yPos": 40
+  "yPos": 36
+},
+{
+  "height": 16,
+  "widget": {
+    "collapsibleGroup": {
+      "collapsed": false
+    },
+    "title": "Network Bytes Received and Sent by TPU VM"
+  },
+  "width": 12,
+  "yPos": 24
 }

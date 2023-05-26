@@ -1,15 +1,4 @@
 {
-  "height": 1,
-  "widget": {
-    "text": {
-      "content": "",
-      "format": "RAW"
-    },
-    "title": "CPU Utilization on TPU Worker"
-  },
-  "width": 12
-},
-{
   "height": 4,
   "widget": {
     "title": "TPU Worker - CPU Utilization Stats",
@@ -41,8 +30,7 @@
       }
     }
   },
-  "width": 12,
-  "yPos": 1
+  "width": 12
 },
 {
   "height": 4,
@@ -83,7 +71,7 @@
     }
   },
   "width": 6,
-  "yPos": 5
+  "yPos": 4
 },
 {
   "height": 4,
@@ -125,5 +113,15 @@
   },
   "width": 6,
   "xPos": 6,
-  "yPos": 5
+  "yPos": 4
+},
+{
+  "height": 8,
+  "widget": {
+    "collapsibleGroup": {
+      "collapsed": false
+    },
+    "title": "CPU Utilization on TPU Worker"
+  },
+  "width": 12
 }
