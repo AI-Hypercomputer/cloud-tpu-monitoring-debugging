@@ -1,0 +1,14 @@
+{
+  "height": 6,
+  "widget": {
+    "logsPanel": {
+      "filter": "resource.type=\"tpu_worker\" log_id(\"tpu.googleapis.com/runtime_monitor\") jsonPayload.verb=\"stacktraceanalyzer\"",
+      "resourceNames": [
+        "projects/${PROJECT_NUMBER}"
+      ]
+    },
+    "title": "Stack Trace Logs"
+  },
+  "width": 12,
+  "yPos": 4
+}

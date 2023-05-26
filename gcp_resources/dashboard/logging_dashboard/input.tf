@@ -12,28 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-terraform {
-  required_providers {
-    google = {
-      source  = "hashicorp/google"
-      version = ">= 4.57.0"
-    }
-  }
-}
-
-module "monitoring_dashboard" {
-  source        = "./dashboard/monitoring_dashboard"
-  project_name  = var.project_name
-  outlier_count = var.outlier_count
-}
-
-module "logging_dashboard" {
-  source       = "./dashboard/logging_dashboard"
-  project_name = var.project_name
-}
-
-module "log_storage" {
-  source                    = "./log_storage"
-  project_name              = var.project_name
-  stack_trace_bucket_config = var.stack_trace_bucket_config
+variable "project_name" {
+  type        = string
+  description = "Name of gcp project"
 }
