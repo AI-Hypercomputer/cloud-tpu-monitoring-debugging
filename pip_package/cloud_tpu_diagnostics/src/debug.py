@@ -26,7 +26,11 @@ def start_debugging(debug_config):
       debug_config.stack_trace_config is not None
       and debug_config.stack_trace_config.collect_stack_trace
   ):
-    thread = threading.Thread(target=send_user_signal, daemon=True)
+    thread = threading.Thread(
+        target=send_user_signal,
+        daemon=True,
+        args=(debug_config.stack_trace_config.stack_trace_interval_seconds,),
+    )
     thread.start()  # start a daemon thread
     enable_stack_trace_dumping(debug_config.stack_trace_config)
 
@@ -40,10 +44,10 @@ def stop_debugging(debug_config):
     disable_stack_trace_dumping()
 
 
-def send_user_signal():
-  """Send SIGUSR1 signal to non-daemon threads after every 10 minutes."""
+def send_user_signal(stack_trace_interval_seconds):
+  """Send SIGUSR1 signal to non-daemon threads after every stack_trace_interval_seconds seconds."""
   while True:
-    time.sleep(600)  # sleep for 10 minutes
+    time.sleep(stack_trace_interval_seconds)
     for thread in threading.enumerate():
       if not thread.daemon:
         signal.pthread_kill(thread.ident, signal.SIGUSR1)
