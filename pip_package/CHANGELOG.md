@@ -38,9 +38,10 @@ To release a new version (e.g. from `1.0.0` -> `2.0.0`):
 
 ## [Unreleased]
 
-## [0.1.0] - YYYY-MM-DD
+## [0.1.0] - 2023-06-08
 
-* Initial release
+* Initial release of cloud-tpu-diagnostics PyPI package
+* FEATURE: Contains debug module to collect stack traces on faults
 
 [Unreleased]: https://github.com/google/cloud-tpu-monitoring-debugging/compare/v0.1.0...HEAD
 [0.1.0]: https://github.com/google/cloud-tpu-monitoring-debugging/releases/tag/v0.1.0
