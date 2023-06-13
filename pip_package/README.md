@@ -66,7 +66,12 @@ stack_trace_config = stack_trace_configuration.StackTraceConfig(
                       collect_stack_trace=True,
                       stack_trace_to_cloud=True)
 ```
-This configuration will temporary collect stack traces inside `/tmp/debugging` directory on TPU host if there is a fault or process hang. Additionally, the traces collected in TPU host memory will be uploaded to Google Cloud Logging, which will make it easier to troubleshoot and fix the problems.
+This configuration will temporary collect stack traces inside `/tmp/debugging` directory on TPU host if there is a fault or process hang. Additionally, the traces collected in TPU host memory will be uploaded to Google Cloud Logging, which will make it easier to troubleshoot and fix the problems. You can view the traces in [Logs Explorer](https://cloud.google.com/logging/docs/view/logs-explorer-interface) using the following query:
+
+```
+logName="projects/<project_name>/logs/tpu.googleapis.com%2Fruntime_monitor"
+jsonPayload.verb="stacktraceanalyzer"
+```
 
 By default, stack traces will be collected every 10 minutes. In order to change the duration between two stack trace collection events, add the following configuration:
 
