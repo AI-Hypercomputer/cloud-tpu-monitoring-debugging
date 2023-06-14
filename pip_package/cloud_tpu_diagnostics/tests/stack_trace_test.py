@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import faulthandler
 import os
 import shutil
 import signal
@@ -20,6 +21,9 @@ import sys
 import textwrap
 import unittest
 from absl.testing import absltest
+from cloud_tpu_diagnostics.src.config import stack_trace_configuration
+from cloud_tpu_diagnostics.src.stack_trace import disable_stack_trace_dumping
+from cloud_tpu_diagnostics.src.stack_trace import enable_stack_trace_dumping
 from cloud_tpu_diagnostics.src.util import default
 
 class StackTraceTest(absltest.TestCase):
@@ -93,6 +97,25 @@ class StackTraceTest(absltest.TestCase):
     _, stderr = process.communicate()
     self.assertEmpty(stderr)
     self.assertFalse(os.path.exists(default.STACK_TRACE_DIR_DEFAULT))
+
+  def testEnableStackTraceDumpingFaulthandlerEnabled(self):
+    stack_trace_config = stack_trace_configuration.StackTraceConfig(
+        collect_stack_trace=True, stack_trace_to_cloud=True
+    )
+    with self.assertLogs(level='INFO') as log:
+      enable_stack_trace_dumping(stack_trace_config)
+    self.assertEqual(faulthandler.is_enabled(), True)
+    self.assertRegex(
+        log.output[0], 'Stack trace will be written in: /tmp/debugging/'
+    )
+
+  def testDisableStackTraceDumpingFaulthandlerDisabled(self):
+    stack_trace_config = stack_trace_configuration.StackTraceConfig(
+        collect_stack_trace=True, stack_trace_to_cloud=True
+    )
+    enable_stack_trace_dumping(stack_trace_config)
+    disable_stack_trace_dumping()
+    self.assertEqual(faulthandler.is_enabled(), False)
 
   def check_fatal_error(self, line_number, error, signal_name, log_to_cloud):
     header = r'Stack \(most recent call first\)'
