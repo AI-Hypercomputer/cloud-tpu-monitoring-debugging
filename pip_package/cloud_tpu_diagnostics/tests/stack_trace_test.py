@@ -114,7 +114,7 @@ class StackTraceTest(absltest.TestCase):
         collect_stack_trace=True, stack_trace_to_cloud=True
     )
     enable_stack_trace_dumping(stack_trace_config)
-    disable_stack_trace_dumping()
+    disable_stack_trace_dumping(stack_trace_config)
     self.assertEqual(faulthandler.is_enabled(), False)
 
   def check_fatal_error(self, line_number, error, signal_name, log_to_cloud):

@@ -55,11 +55,18 @@ def enable_stack_trace_dumping(stack_trace_config):
     logger.error("Error in enabling dumping of stack trace.", e)
 
 
-def disable_stack_trace_dumping():
-  """Disable faulthandler and unregister user signals."""
+def disable_stack_trace_dumping(stack_trace_config):
+  """Disable faulthandler and unregister user signals.
+
+  Args:
+    stack_trace_config: configuration object for stack trace collection
+  """
   try:
     global _stack_trace_file_obj
-    if _stack_trace_file_obj is not None:
+    if (
+        stack_trace_config.stack_trace_to_cloud
+        and _stack_trace_file_obj is not None
+    ):
       _stack_trace_file_obj.close()
       _stack_trace_file_obj = None
 

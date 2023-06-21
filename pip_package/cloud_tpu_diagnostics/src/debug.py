@@ -41,7 +41,7 @@ def stop_debugging(debug_config):
       debug_config.stack_trace_config is not None
       and debug_config.stack_trace_config.collect_stack_trace
   ):
-    disable_stack_trace_dumping()
+    disable_stack_trace_dumping(debug_config.stack_trace_config)
 
 
 def send_user_signal(stack_trace_interval_seconds):
