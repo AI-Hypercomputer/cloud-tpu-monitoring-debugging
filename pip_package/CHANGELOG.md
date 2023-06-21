@@ -27,21 +27,22 @@ This allow to:
 
 To release a new version (e.g. from `1.0.0` -> `2.0.0`):
 
-* Create a new `# [2.0.0] - YYYY-MM-DD` header and add the current
-  `[Unreleased]` notes.
+* Create a new `# [2.0.0] - YYYY-MM-DD` header and add the changes to be released.
 * At the end of the file:
   * Define the new link url:
   `[2.0.0]: https://github.com/google/cloud-tpu-monitoring-debugging/compare/v1.0.0...v2.0.0`
-  * Update the `[Unreleased]` url: `v1.0.0...HEAD` -> `v2.0.0...HEAD`
 
 -->
 
-## [Unreleased]
+## [0.1.1] - 2023-06-21
+* Bug Fixes
+  * Fixes dumping of stack traces on the console when exceptions like `AssertionError`, `tensorflow.python.framework.errors_impl.NotFoundError` are thrown when `collect_stack_trace=True` and `stack_trace_to_cloud=False`.
+* Updated README
 
 ## [0.1.0] - 2023-06-08
 
 * Initial release of cloud-tpu-diagnostics PyPI package
 * FEATURE: Contains debug module to collect stack traces on faults
 
-[Unreleased]: https://github.com/google/cloud-tpu-monitoring-debugging/compare/v0.1.0...HEAD
+[0.1.1]: https://github.com/google/cloud-tpu-monitoring-debugging/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/google/cloud-tpu-monitoring-debugging/releases/tag/v0.1.0
