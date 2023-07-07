@@ -45,14 +45,14 @@ There are following resources managed in this directory:
 2. **Debugging Dashboard**: This dashboard displays the stack traces collected in Cloud Logging for the process running on TPU VMs.
 3. **Logging Storage**: This is an user-defined log bucket to store stack traces. Creating a new log storage is completely optional. If you choose not to create a separate log bucket, the stack traces will be collected in [_Default log bucket](https://cloud.google.com/logging/docs/routing/overview#default-bucket).
 
-Run `terraform apply -var outlier_count=<count of outliers for monitoring dashboard>` inside `gcp_resources/` directory to deploy all the resources mentioned above. You will be prompted to provide values for some input variables. If `outlier_count` variable is missing from the command, terraform will take the default value (10 in this case). After confirming the action, all the resources will get automatically deployed in your gcp project.
+Run `terraform init && terraform apply` inside `gcp_resources/gce` directory to deploy all the resources mentioned above for TPU workloads running on GCE. You will be prompted to provide values for some input variables. After confirming the action, all the resources will get automatically deployed in your gcp project.
 
 Follow the below guide to deploy the resources individually:
 ### Monitoring Dashboard
-Run `terraform init && terraform apply -var outlier_count=<count of outliers for monitoring dashboard>` inside `gcp_resources/dashboard/monitoring_dashboard/` to deploy only outlier dashboard in your gcp project. If `outlier_count` variable is missing from the command, terraform will take the default value (10 in this case).
+Run `terraform init && terraform apply` inside `gcp_resources/gce/resources/dashboard/monitoring_dashboard/` to deploy only monitoring dashboard for GCE in your gcp project.
 
 ### Debugging Dashboard
-Run `terraform init && terraform apply` inside `gcp_resources/dashboard/logging_dashboard/` to deploy only debugging dashboard in your gcp project.
+Run `terraform init && terraform apply` inside `gcp_resources/gce/resources/dashboard/logging_dashboard/` to deploy only debugging dashboard for GCE in your gcp project.
 
 ### Log Storage
-Run `terraform init && terraform apply` inside `gcp_resources/log_storage/` to deploy a separate log bucket to store stack traces. You will be prompted to provide name of your gcp project and also the bucket configuration. You can also set the retention period for the bucket.
+Run `terraform init && terraform apply` inside `gcp_resources/gce/resources/log_storage/` to deploy a separate log bucket to store stack traces for GCE. You will be prompted to provide name of your gcp project and also the bucket configuration. You can also set the retention period for the bucket.

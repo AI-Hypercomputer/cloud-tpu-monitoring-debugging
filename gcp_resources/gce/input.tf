@@ -17,10 +17,17 @@ variable "project_name" {
   description = "Name of gcp project"
 }
 
-variable "outlier_count" {
-  type        = number
-  default     = 10
-  description = "Number of outliers to show on monitoring dashboard (default=10)"
+variable "monitoring_dashboard_config" {
+  type = object({
+    outlier_count : optional(number)
+  })
+  description = <<EOF
+  Configuration for monitoring dashboard:
+  {
+    "outlier_count": "number of outliers to show on dashboard, default to 10 if not set"
+  }
+  Enter {} to set default configuration for monitoring dashboard.
+  EOF
 }
 
 // Valid inputs:
