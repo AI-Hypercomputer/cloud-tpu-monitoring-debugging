@@ -1,6 +1,6 @@
 {
   "category": "CUSTOM",
-  "displayName": "TPU Monitoring Dashboard",
+  "displayName": "GCE - TPU Monitoring Dashboard",
   "dashboardFilters": [
    {
      "filterType": "RESOURCE_LABEL",

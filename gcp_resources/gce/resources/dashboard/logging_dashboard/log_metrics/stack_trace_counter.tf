@@ -14,7 +14,7 @@
 
 // Metric that counts the number of stack trace entries that match a specified filter within a specific period
 resource "google_logging_metric" "stack_trace_counter_metric" {
-  name        = "stack_trace_counter"
+  name        = "stack_trace_counter_gce"
   project     = var.project_name
   description = "Counts the number of stack trace log entries within a specific period."
   filter      = "resource.type=\"tpu_worker\" AND log_id(\"tpu.googleapis.com/runtime_monitor\") AND jsonPayload.verb=\"stacktraceanalyzer\""
