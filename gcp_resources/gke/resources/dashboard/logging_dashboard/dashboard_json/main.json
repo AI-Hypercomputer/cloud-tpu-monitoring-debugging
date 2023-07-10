@@ -1,0 +1,31 @@
+{
+  "category": "CUSTOM",
+  "displayName": "GKE - TPU Logging Dashboard",
+  "dashboardFilters": [
+    {
+      "filterType": "RESOURCE_LABEL",
+      "labelKey": "cluster_name"
+    },
+    {
+      "filterType": "RESOURCE_LABEL",
+      "labelKey": "namespace_name"
+    }
+  ],
+  "mosaicLayout": {
+    "columns": 12,
+    "tiles": [
+      ${TILE_1},
+      ${TILE_2},
+      {
+        "height": 10,
+        "widget": {
+          "collapsibleGroup": {
+            "collapsed": false
+          },
+          "title": "TPU VM Process Debugging"
+        },
+        "width": 12
+      }
+    ]
+  }
+}

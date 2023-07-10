@@ -1,0 +1,57 @@
+{
+  "height": 4,
+  "widget": {
+    "timeSeriesTable": {
+      "columnSettings": [
+        {
+          "column": "location",
+          "visible": true
+        },
+        {
+          "column": "pod",
+          "visible": true
+        },
+        {
+          "column": "cluster",
+          "visible": true
+        },
+        {
+          "column": "job_name",
+          "visible": true
+        },
+        {
+          "column": "value",
+          "visible": true
+        }
+      ],
+      "dataSets": [
+        {
+          "minAlignmentPeriod": "600s",
+          "timeSeriesQuery": {
+            "timeSeriesFilter": {
+              "aggregation": {
+                "alignmentPeriod": "600s",
+                "perSeriesAligner": "ALIGN_RATE"
+              },
+              "filter": "metric.type=\"logging.googleapis.com/user/${METRIC_NAME}\" resource.type=\"k8s_container\"",
+              "secondaryAggregation": {
+                "alignmentPeriod": "600s",
+                "crossSeriesReducer": "REDUCE_MEAN",
+                "groupByFields": [
+                  "metric.label.\"location\"",
+                  "metric.label.\"pod\"",
+                  "metric.label.\"cluster\"",
+                  "metric.label.\"job_name\""
+                ],
+                "perSeriesAligner": "ALIGN_MEAN"
+              }
+            }
+          }
+        }
+      ],
+      "metricVisualization": "BAR"
+    },
+    "title": "Stack Trace Log Entry Count per Period [Sorted by MEAN]"
+  },
+  "width": 12
+}

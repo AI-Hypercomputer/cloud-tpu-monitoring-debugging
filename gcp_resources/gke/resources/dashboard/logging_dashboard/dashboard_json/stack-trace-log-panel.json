@@ -1,0 +1,14 @@
+{
+  "height": 6,
+  "widget": {
+    "logsPanel": {
+      "filter": "resource.type=\"k8s_container\" AND \nresource.labels.container_name=~\"[a-z-0-9]*stacktrace[a-z-0-9]*\"\n",
+      "resourceNames": [
+        "projects/${PROJECT_NUMBER}"
+      ]
+    },
+    "title": "Stack Trace Logs"
+  },
+  "width": 12,
+  "yPos": 4
+}
