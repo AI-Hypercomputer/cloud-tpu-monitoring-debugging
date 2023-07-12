@@ -1,0 +1,141 @@
+{
+  "height": 4,
+  "widget": {
+    "title": "Memory Usage Stats",
+    "xyChart": {
+      "chartOptions": {
+        "mode": "STATS"
+      },
+      "dataSets": [
+        {
+          "minAlignmentPeriod": "60s",
+          "plotType": "LINE",
+          "targetAxis": "Y1",
+          "timeSeriesQuery": {
+            "timeSeriesFilter": {
+              "aggregation": {
+                "alignmentPeriod": "60s",
+                "perSeriesAligner": "ALIGN_SUM"
+              },
+              "filter": "metric.type=\"kubernetes.io/container/memory/used_bytes\" resource.type=\"k8s_container\" $${ClusterName} $${JobName} $${JobIndex}"
+            }
+          }
+        }
+      ],
+      "thresholds": [],
+      "timeshiftDuration": "0s",
+      "yAxis": {
+        "label": "",
+        "scale": "LINEAR"
+      }
+    }
+  },
+  "width": 12,
+  "yPos": 8
+},
+{
+  "height": 4,
+  "widget": {
+    "title": "Memory Usage Outliers [MEAN]",
+    "xyChart": {
+      "chartOptions": {
+        "mode": "COLOR"
+      },
+      "dataSets": [
+        {
+          "legendTemplate": "Cluster: $${resource.labels.cluster_name} Job: $${metadata.user_labels\\.jobset\\.sigs\\.k8s\\.io/jobset-name} JobIndex: $${metadata.user_labels\\.jobset\\.sigs\\.k8s\\.io/job-index}",
+          "minAlignmentPeriod": "60s",
+          "plotType": "LINE",
+          "targetAxis": "Y1",
+          "timeSeriesQuery": {
+            "timeSeriesFilter": {
+              "aggregation": {
+                "alignmentPeriod": "60s",
+                "crossSeriesReducer": "REDUCE_MEAN",
+                "groupByFields": [
+                  "resource.label.\"cluster_name\"",
+                  "metadata.user_labels.\"jobset.sigs.k8s.io/jobset-name\"",
+                  "metadata.user_labels.\"jobset.sigs.k8s.io/job-index\""
+                ],
+                "perSeriesAligner": "ALIGN_MEAN"
+              },
+              "filter": "metric.type=\"kubernetes.io/container/memory/used_bytes\" resource.type=\"k8s_container\" $${ClusterName} $${JobName} $${JobIndex}",
+              "pickTimeSeriesFilter": {
+                "direction": "TOP",
+                "numTimeSeries": ${OUTLIER_COUNT},
+                "rankingMethod": "METHOD_MEAN"
+              }
+            }
+          }
+        }
+      ],
+      "thresholds": [],
+      "timeshiftDuration": "0s",
+      "yAxis": {
+        "label": "",
+        "scale": "LINEAR"
+      }
+    }
+  },
+  "width": 6,
+  "yPos": 12
+},
+{
+  "height": 4,
+  "widget": {
+    "title": "Memory Usage Outliers [MAX]",
+    "xyChart": {
+      "chartOptions": {
+        "mode": "COLOR"
+      },
+      "dataSets": [
+        {
+          "legendTemplate": "Cluster: $${resource.labels.cluster_name} Job: $${metadata.user_labels\\.jobset\\.sigs\\.k8s\\.io/jobset-name} JobIndex: $${metadata.user_labels\\.jobset\\.sigs\\.k8s\\.io/job-index}",
+          "minAlignmentPeriod": "60s",
+          "plotType": "LINE",
+          "targetAxis": "Y1",
+          "timeSeriesQuery": {
+            "timeSeriesFilter": {
+              "aggregation": {
+                "alignmentPeriod": "60s",
+                "crossSeriesReducer": "REDUCE_MAX",
+                "groupByFields": [
+                  "resource.label.\"cluster_name\"",
+                  "metadata.user_labels.\"jobset.sigs.k8s.io/jobset-name\"",
+                  "metadata.user_labels.\"jobset.sigs.k8s.io/job-index\""
+                ],
+                "perSeriesAligner": "ALIGN_MAX"
+              },
+              "filter": "metric.type=\"kubernetes.io/container/memory/used_bytes\" resource.type=\"k8s_container\" $${ClusterName} $${JobName} $${JobIndex}",
+              "pickTimeSeriesFilter": {
+                "direction": "TOP",
+                "numTimeSeries": ${OUTLIER_COUNT},
+                "rankingMethod": "METHOD_MAX"
+              }
+            }
+          }
+        }
+      ],
+      "thresholds": [],
+      "timeshiftDuration": "0s",
+      "yAxis": {
+        "label": "",
+        "scale": "LINEAR"
+      }
+    }
+  },
+  "width": 6,
+  "xPos": 6,
+  "yPos": 12
+},
+{
+  "height": 8,
+  "widget": {
+    "collapsibleGroup": {
+      "collapsed": false
+    },
+    "title": "Memory Usage by TPU Slice"
+  },
+  "width": 12,
+  "yPos": 8
+}

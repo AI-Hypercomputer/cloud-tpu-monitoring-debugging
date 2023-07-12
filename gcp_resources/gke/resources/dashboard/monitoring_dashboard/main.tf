@@ -26,17 +26,6 @@ terraform {
   */
   backend "gcs" {
     # GCS prefix inside the bucket. terraform states are stored in an object called <prefix>/default.tfstate
-    prefix = "gke"
+    prefix = "gke/dashboard/monitoring_dashboard"
   }
-}
-
-module "monitoring_dashboard" {
-  source                      = "./resources/dashboard/monitoring_dashboard"
-  project_name                = var.project_name
-  monitoring_dashboard_config = var.monitoring_dashboard_config
-}
-
-module "logging_dashboard" {
-  source       = "./resources/dashboard/logging_dashboard"
-  project_name = var.project_name
 }

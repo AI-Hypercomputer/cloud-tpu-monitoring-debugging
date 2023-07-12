@@ -1,0 +1,287 @@
+{
+  "height": 4,
+  "widget": {
+    "title": "Network Bytes Sent Stats",
+    "xyChart": {
+      "chartOptions": {
+        "mode": "STATS"
+      },
+      "dataSets": [
+        {
+          "minAlignmentPeriod": "60s",
+          "plotType": "LINE",
+          "targetAxis": "Y1",
+          "timeSeriesQuery": {
+            "timeSeriesFilter": {
+              "aggregation": {
+                "alignmentPeriod": "60s",
+                "perSeriesAligner": "ALIGN_RATE"
+              },
+              "filter": "metric.type=\"kubernetes.io/pod/network/sent_bytes_count\" resource.type=\"k8s_pod\" $${ClusterName} $${JobName} $${JobIndex}"
+            }
+          }
+        }
+      ],
+      "thresholds": [],
+      "timeshiftDuration": "0s",
+      "yAxis": {
+        "label": "",
+        "scale": "LINEAR"
+      }
+    }
+  },
+  "width": 12,
+  "yPos": 16
+},
+{
+  "height": 4,
+  "widget": {
+    "title": "Network Bytes Sent Outliers [MEAN]",
+    "xyChart": {
+      "chartOptions": {
+        "mode": "COLOR"
+      },
+      "dataSets": [
+        {
+          "legendTemplate": "Cluster: $${resource.labels.cluster_name} Job: $${metadata.user_labels\\.jobset\\.sigs\\.k8s\\.io/jobset-name} JobIndex: $${metadata.user_labels\\.jobset\\.sigs\\.k8s\\.io/job-index}",
+          "minAlignmentPeriod": "60s",
+          "plotType": "LINE",
+          "targetAxis": "Y1",
+          "timeSeriesQuery": {
+            "timeSeriesFilter": {
+              "aggregation": {
+                "alignmentPeriod": "60s",
+                "perSeriesAligner": "ALIGN_RATE"
+              },
+              "filter": "metric.type=\"kubernetes.io/pod/network/sent_bytes_count\" resource.type=\"k8s_pod\" $${ClusterName} $${JobName} $${JobIndex}",
+              "pickTimeSeriesFilter": {
+                "direction": "TOP",
+                "numTimeSeries": ${OUTLIER_COUNT},
+                "rankingMethod": "METHOD_MEAN"
+              },
+              "secondaryAggregation": {
+                "alignmentPeriod": "60s",
+                "crossSeriesReducer": "REDUCE_MEAN",
+                "groupByFields": [
+                  "resource.label.\"cluster_name\"",
+                  "metadata.user_labels.\"jobset.sigs.k8s.io/jobset-name\"",
+                  "metadata.user_labels.\"jobset.sigs.k8s.io/job-index\""
+                ],
+                "perSeriesAligner": "ALIGN_MEAN"
+              }
+            }
+          }
+        }
+      ],
+      "thresholds": [],
+      "timeshiftDuration": "0s",
+      "yAxis": {
+        "label": "",
+        "scale": "LINEAR"
+      }
+    }
+  },
+  "width": 6,
+  "yPos": 20
+},
+{
+  "height": 4,
+  "widget": {
+    "title": "Network Bytes Sent Outliers [MAX]",
+    "xyChart": {
+      "chartOptions": {
+        "mode": "COLOR"
+      },
+      "dataSets": [
+        {
+          "legendTemplate": "Cluster: $${resource.labels.cluster_name} Job: $${metadata.user_labels\\.jobset\\.sigs\\.k8s\\.io/jobset-name} JobIndex: $${metadata.user_labels\\.jobset\\.sigs\\.k8s\\.io/job-index}",
+          "minAlignmentPeriod": "60s",
+          "plotType": "LINE",
+          "targetAxis": "Y1",
+          "timeSeriesQuery": {
+            "timeSeriesFilter": {
+              "aggregation": {
+                "alignmentPeriod": "60s",
+                "perSeriesAligner": "ALIGN_RATE"
+              },
+              "filter": "metric.type=\"kubernetes.io/pod/network/sent_bytes_count\" resource.type=\"k8s_pod\" $${ClusterName} $${JobName} $${JobIndex}",
+              "pickTimeSeriesFilter": {
+                "direction": "TOP",
+                "numTimeSeries": ${OUTLIER_COUNT},
+                "rankingMethod": "METHOD_MAX"
+              },
+              "secondaryAggregation": {
+                "alignmentPeriod": "60s",
+                "crossSeriesReducer": "REDUCE_MAX",
+                "groupByFields": [
+                  "resource.label.\"cluster_name\"",
+                  "metadata.user_labels.\"jobset.sigs.k8s.io/jobset-name\"",
+                  "metadata.user_labels.\"jobset.sigs.k8s.io/job-index\""
+                ],
+                "perSeriesAligner": "ALIGN_MAX"
+              }
+            }
+          }
+        }
+      ],
+      "thresholds": [],
+      "timeshiftDuration": "0s",
+      "yAxis": {
+        "label": "",
+        "scale": "LINEAR"
+      }
+    }
+  },
+  "width": 6,
+  "xPos": 6,
+  "yPos": 20
+},
+{
+  "height": 4,
+  "widget": {
+    "title": "Network Bytes Received Stats",
+    "xyChart": {
+      "chartOptions": {
+        "mode": "STATS"
+      },
+      "dataSets": [
+        {
+          "minAlignmentPeriod": "60s",
+          "plotType": "LINE",
+          "targetAxis": "Y1",
+          "timeSeriesQuery": {
+            "timeSeriesFilter": {
+              "aggregation": {
+                "alignmentPeriod": "60s",
+                "perSeriesAligner": "ALIGN_RATE"
+              },
+              "filter": "metric.type=\"kubernetes.io/pod/network/received_bytes_count\" resource.type=\"k8s_pod\" $${ClusterName} $${JobName} $${JobIndex}"
+            }
+          }
+        }
+      ],
+      "thresholds": [],
+      "timeshiftDuration": "0s",
+      "yAxis": {
+        "label": "",
+        "scale": "LINEAR"
+      }
+    }
+  },
+  "width": 12,
+  "yPos": 24
+},
+{
+  "height": 4,
+  "widget": {
+    "title": "Network Bytes Received Outliers [MEAN]",
+    "xyChart": {
+      "chartOptions": {
+        "mode": "COLOR"
+      },
+      "dataSets": [
+        {
+          "legendTemplate": "Cluster: $${resource.labels.cluster_name} Job: $${metadata.user_labels\\.jobset\\.sigs\\.k8s\\.io/jobset-name} JobIndex: $${metadata.user_labels\\.jobset\\.sigs\\.k8s\\.io/job-index}",
+          "minAlignmentPeriod": "60s",
+          "plotType": "LINE",
+          "targetAxis": "Y1",
+          "timeSeriesQuery": {
+            "timeSeriesFilter": {
+              "aggregation": {
+                "alignmentPeriod": "60s",
+                "perSeriesAligner": "ALIGN_RATE"
+              },
+              "filter": "metric.type=\"kubernetes.io/pod/network/received_bytes_count\" resource.type=\"k8s_pod\" $${ClusterName} $${JobName} $${JobIndex}",
+              "pickTimeSeriesFilter": {
+                "direction": "TOP",
+                "numTimeSeries": ${OUTLIER_COUNT},
+                "rankingMethod": "METHOD_MEAN"
+              },
+              "secondaryAggregation": {
+                "alignmentPeriod": "60s",
+                "crossSeriesReducer": "REDUCE_MEAN",
+                "groupByFields": [
+                  "resource.label.\"cluster_name\"",
+                  "metadata.user_labels.\"jobset.sigs.k8s.io/jobset-name\"",
+                  "metadata.user_labels.\"jobset.sigs.k8s.io/job-index\""
+                ],
+                "perSeriesAligner": "ALIGN_MEAN"
+              }
+            }
+          }
+        }
+      ],
+      "thresholds": [],
+      "timeshiftDuration": "0s",
+      "yAxis": {
+        "label": "",
+        "scale": "LINEAR"
+      }
+    }
+  },
+  "width": 6,
+  "yPos": 28
+},
+{
+  "height": 4,
+  "widget": {
+    "title": "Network Bytes Received Outliers [MAX]",
+    "xyChart": {
+      "chartOptions": {
+        "mode": "COLOR"
+      },
+      "dataSets": [
+        {
+          "legendTemplate": "Cluster: $${resource.labels.cluster_name} Job: $${metadata.user_labels\\.jobset\\.sigs\\.k8s\\.io/jobset-name} JobIndex: $${metadata.user_labels\\.jobset\\.sigs\\.k8s\\.io/job-index}",
+          "minAlignmentPeriod": "60s",
+          "plotType": "LINE",
+          "targetAxis": "Y1",
+          "timeSeriesQuery": {
+            "timeSeriesFilter": {
+              "aggregation": {
+                "alignmentPeriod": "60s",
+                "perSeriesAligner": "ALIGN_RATE"
+              },
+              "filter": "metric.type=\"kubernetes.io/pod/network/received_bytes_count\" resource.type=\"k8s_pod\" $${ClusterName} $${JobName} $${JobIndex}",
+              "pickTimeSeriesFilter": {
+                "direction": "TOP",
+                "numTimeSeries": ${OUTLIER_COUNT},
+                "rankingMethod": "METHOD_MAX"
+              },
+              "secondaryAggregation": {
+                "alignmentPeriod": "60s",
+                "crossSeriesReducer": "REDUCE_MAX",
+                "groupByFields": [
+                  "resource.label.\"cluster_name\"",
+                  "metadata.user_labels.\"jobset.sigs.k8s.io/jobset-name\"",
+                  "metadata.user_labels.\"jobset.sigs.k8s.io/job-index\""
+                ],
+                "perSeriesAligner": "ALIGN_MAX"
+              }
+            }
+          }
+        }
+      ],
+      "thresholds": [],
+      "timeshiftDuration": "0s",
+      "yAxis": {
+        "label": "",
+        "scale": "LINEAR"
+      }
+    }
+  },
+  "width": 6,
+  "xPos": 6,
+  "yPos": 28
+},
+{
+  "height": 16,
+  "widget": {
+    "collapsibleGroup": {
+      "collapsed": false
+    },
+    "title": "Network Bytes Sent and Received by TPU Slice"
+  },
+  "width": 12,
+  "yPos": 16
+}

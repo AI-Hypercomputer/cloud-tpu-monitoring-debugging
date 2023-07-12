@@ -1,0 +1,29 @@
+{
+  "category": "CUSTOM",
+  "displayName": "GKE - TPU Monitoring Dashboard",
+  "dashboardFilters": [
+    {
+      "filterType": "RESOURCE_LABEL",
+      "labelKey": "cluster_name",
+      "templateVariable": "ClusterName"
+    },
+    {
+      "filterType": "USER_METADATA_LABEL",
+      "labelKey": "jobset.sigs.k8s.io/jobset-name",
+      "templateVariable": "JobName"
+    },
+    {
+      "filterType": "USER_METADATA_LABEL",
+      "labelKey": "jobset.sigs.k8s.io/job-index",
+      "templateVariable": "JobIndex"
+    }
+  ],
+  "mosaicLayout": {
+    "columns": 12,
+    "tiles": [
+      ${TILE_1},
+      ${TILE_2},
+      ${TILE_3}
+    ]
+  }
+ }

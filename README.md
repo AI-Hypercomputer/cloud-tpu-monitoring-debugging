@@ -81,6 +81,9 @@ Follow the below guide to deploy the resources individually:
 #### GCE
 Run `terraform init && terraform apply` inside `gcp_resources/gce/resources/dashboard/monitoring_dashboard/` to deploy only monitoring dashboard for GCE in your gcp project.
 
+#### GKE
+Run `terraform init && terraform apply` inside `gcp_resources/gke/resources/dashboard/monitoring_dashboard/` to deploy only monitoring dashboard for GKE in your gcp project.
+
 ### Debugging Dashboard
 #### GCE
 Run `terraform init && terraform apply` inside `gcp_resources/gce/resources/dashboard/logging_dashboard/` to deploy only debugging dashboard for GCE in your gcp project.
