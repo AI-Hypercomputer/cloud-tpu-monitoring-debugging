@@ -19,11 +19,20 @@ terraform {
       version = ">= 4.57.0"
     }
   }
+  /*
+    Stores the state as an object in a configurable prefix in a pre-existing bucket on Google Cloud Storage (GCS).
+    The bucket must exist prior to configuring the backend.
+    For more information: https://developer.hashicorp.com/terraform/language/settings/backends/gcs
+  */
+  backend "gcs" {
+    # GCS prefix inside the bucket. terraform states are stored in an object called <prefix>/default.tfstate
+    prefix = "gce"
+  }
 }
 
 module "monitoring_dashboard" {
-  source        = "./resources/dashboard/monitoring_dashboard"
-  project_name  = var.project_name
+  source                      = "./resources/dashboard/monitoring_dashboard"
+  project_name                = var.project_name
   monitoring_dashboard_config = var.monitoring_dashboard_config
 }
 

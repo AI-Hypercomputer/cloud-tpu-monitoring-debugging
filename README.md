@@ -38,6 +38,27 @@ manual effort.
 -   You can also run `terraform plan` to validate resource declarations,
     identify any syntax errors, version mismatch before deploying the resources.
 
+### Configure Terraform to store state in Cloud Storage
+
+By default, Terraform stores [state](https://www.terraform.io/docs/state/) locally in a file named `terraform.tfstate`. This default configuration can make Terraform usage difficult for teams, especially when many users run Terraform at the same time and each machine has its own understanding of the current infrastructure. To help avoid such issues, this section configures a remote state that points to Google Cloud Storage (GCS) bucket.
+
+1. In Cloud Shell, create the GCS bucket:
+
+        gsutil mb gs://${GCS_BUCKET_NAME}
+
+2. Enable [Object Versioning](https://cloud.google.com/storage/docs/object-versioning) to keep the history of your deployments. Enabling Object Versioning increases [storage costs](https://cloud.google.com/storage/pricing), which you can mitigate by configuring
+[Object Lifecycle Management](https://cloud.google.com/storage/docs/lifecycle) to delete old state versions.
+
+        gsutil versioning set on gs://${GCS_BUCKET_NAME}
+
+3. Enter the name of GCS bucket created above when you run `terraform init` to initialize Terraform.
+
+        Initializing the backend...
+        bucket
+          The name of the Google Cloud Storage bucket
+
+          Enter a value: <GCS_BUCKET_NAME>
+
 ## Deploy GCP Resources
 There are following resources managed in this directory:
 
@@ -45,7 +66,11 @@ There are following resources managed in this directory:
 2. **Debugging Dashboard**: This dashboard displays the stack traces collected in Cloud Logging for the process running on TPU VMs.
 3. **Logging Storage**: This is an user-defined log bucket to store stack traces. Creating a new log storage is completely optional. If you choose not to create a separate log bucket, the stack traces will be collected in [_Default log bucket](https://cloud.google.com/logging/docs/routing/overview#default-bucket).
 
+### Deploy Resources for Workloads on GCE
+
 Run `terraform init && terraform apply` inside `gcp_resources/gce` directory to deploy all the resources mentioned above for TPU workloads running on GCE. You will be prompted to provide values for some input variables. After confirming the action, all the resources will get automatically deployed in your gcp project.
+
+### Deploy Resources for Workloads on GKE
 
 Run `terraform init && terraform apply` inside `gcp_resources/gke` directory to deploy all the resources mentioned above for TPU workloads running on GKE. You will be prompted to provide values for some input variables. After confirming the action, all the resources will get automatically deployed in your gcp project.
 
