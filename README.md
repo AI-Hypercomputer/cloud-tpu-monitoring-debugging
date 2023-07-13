@@ -116,3 +116,6 @@ volumes:
 ### Log Storage
 #### GCE
 Run `terraform init && terraform apply` inside `gcp_resources/gce/resources/log_storage/` to deploy a separate log bucket to store stack traces for GCE. You will be prompted to provide name of your gcp project and also the bucket configuration. You can also set the retention period for the bucket.
+
+#### GKE
+Run `terraform init && terraform apply` inside `gcp_resources/gke/resources/log_storage/` to deploy a separate log bucket to store stack traces for GKE. You will be prompted to provide name of your gcp project and also the bucket configuration. You can also set the retention period for the bucket. Make sure that you have the sidecar container running in your GKE cluster as mentioned in [Debugging Dashboard section for GKE](#debugging-dashboard).

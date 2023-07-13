@@ -17,19 +17,6 @@ variable "project_name" {
   description = "Name of gcp project"
 }
 
-variable "monitoring_dashboard_config" {
-  type = object({
-    outlier_count : optional(number)
-  })
-  description = <<EOF
-  Configuration for monitoring dashboard:
-  {
-    "outlier_count": "number of outliers to show on dashboard, default to 10 if not set"
-  }
-  Enter {} to set default configuration for monitoring dashboard.
-  EOF
-}
-
 // Valid inputs:
 // 1. To create stack trace bucket for 30 retention days: {"bucket_prefix":"<prefix_for_bucket>"}
 // 2. To create stack trace bucket for x retention days: {"bucket_prefix":"<prefix_for_bucket>", "retention_days":x}
