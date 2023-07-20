@@ -18,28 +18,28 @@ variable "project_name" {
 }
 
 // Valid inputs:
-// 1. To create stack trace bucket for 30 retention days: {"bucket_prefix":"<prefix_for_bucket>"}
-// 2. To create stack trace bucket for x retention days: {"bucket_prefix":"<prefix_for_bucket>", "retention_days":x}
+// 1. To create stack trace bucket for 30 retention days: {"bucket_name":"<log_bucket_name>"}
+// 2. To create stack trace bucket for x retention days: {"bucket_name":"<log_bucket_name>", "retention_days":x}
 // 3. To not create stack trace bucket: {}
 variable "stack_trace_bucket_config" {
   type = object({
-    bucket_prefix : optional(string)
+    bucket_name : optional(string)
     retention_days : optional(number)
   })
   validation {
     condition = (
-      (var.stack_trace_bucket_config.bucket_prefix == null &&
+      (var.stack_trace_bucket_config.bucket_name == null &&
       var.stack_trace_bucket_config.retention_days == null) ||
-      (var.stack_trace_bucket_config.bucket_prefix != null)
+      (var.stack_trace_bucket_config.bucket_name != null)
     )
-    error_message = "bucket_prefix is not defined for stack_trace_bucket_config."
+    error_message = "bucket_name is not defined for stack_trace_bucket_config."
   }
   description = <<EOF
-  Configuration for log bucket to store stack traces:
+  Configuration to create a log bucket to store stack traces:
   {
-    "bucket_prefix": "prefix for stack traces bucket name",
+    "bucket_name": "name of log bucket to create",
     "retention_days": number of days to retain stack traces, default to 30 days if not set
   }
-  Enter {} to not create separate bucket for stack traces.
+  Enter {} to not create separate log bucket for stack traces.
   EOF
 }

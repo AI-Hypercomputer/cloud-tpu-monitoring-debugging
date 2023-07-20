@@ -14,7 +14,7 @@
 
 locals {
   stack_trace_filter         = "projects/${var.project_name}/logs/tpu.googleapis.com%2Fruntime_monitor AND jsonPayload.verb=stacktraceanalyzer"
-  stack_trace_bucket_counter = var.stack_trace_bucket_config.bucket_prefix == null ? 0 : 1
+  stack_trace_bucket_counter = var.stack_trace_bucket_config.bucket_name == null ? 0 : 1
 }
 
 resource "google_logging_project_bucket_config" "log_bucket" {
@@ -23,13 +23,13 @@ resource "google_logging_project_bucket_config" "log_bucket" {
   location = "global"
   // default retention period is 30 days
   retention_days = var.stack_trace_bucket_config.retention_days == null ? 30 : var.stack_trace_bucket_config.retention_days
-  bucket_id      = "${var.stack_trace_bucket_config.bucket_prefix}_log_bucket"
+  bucket_id      = var.stack_trace_bucket_config.bucket_name
 }
 
 resource "google_logging_project_sink" "log_sink" {
   count       = local.stack_trace_bucket_counter
   project     = var.project_name
-  name        = "${var.stack_trace_bucket_config.bucket_prefix}_log_sink"
+  name        = "${var.stack_trace_bucket_config.bucket_name}_sink"
   destination = "logging.googleapis.com/projects/${var.project_name}/locations/global/buckets/${google_logging_project_bucket_config.log_bucket[count.index].bucket_id}"
   filter      = local.stack_trace_filter
 }
