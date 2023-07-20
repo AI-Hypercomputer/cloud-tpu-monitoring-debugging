@@ -51,6 +51,11 @@
             "timeSeriesFilter": {
               "aggregation": {
                 "alignmentPeriod": "60s",
+                "crossSeriesReducer": "REDUCE_MEAN",
+                "groupByFields": [
+                  "resource.label.\"node_id\"",
+                  "resource.label.\"worker_id\""
+                ],
                 "perSeriesAligner": "ALIGN_MEAN"
               },
               "filter": "metric.type=\"tpu.googleapis.com/tpu/tensorcore/idle_duration\" resource.type=\"tpu_worker\"",
@@ -92,6 +97,11 @@
             "timeSeriesFilter": {
               "aggregation": {
                 "alignmentPeriod": "60s",
+                "crossSeriesReducer": "REDUCE_MAX",
+                "groupByFields": [
+                  "resource.label.\"node_id\"",
+                  "resource.label.\"worker_id\""
+                ],
                 "perSeriesAligner": "ALIGN_MAX"
               },
               "filter": "metric.type=\"tpu.googleapis.com/tpu/tensorcore/idle_duration\" resource.type=\"tpu_worker\"",
