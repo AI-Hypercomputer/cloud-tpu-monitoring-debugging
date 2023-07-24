@@ -13,9 +13,9 @@
       "templateVariable": "JobName"
     },
     {
-      "filterType": "USER_METADATA_LABEL",
-      "labelKey": "jobset.sigs.k8s.io/job-index",
-      "templateVariable": "JobIndex"
+      "filterType": "RESOURCE_LABEL",
+      "labelKey": "pod_name",
+      "templateVariable": "PodName"
     }
   ],
   "mosaicLayout": {

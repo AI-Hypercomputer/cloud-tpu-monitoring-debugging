@@ -17,7 +17,7 @@
                 "alignmentPeriod": "60s",
                 "perSeriesAligner": "ALIGN_RATE"
               },
-              "filter": "metric.type=\"kubernetes.io/container/cpu/core_usage_time\" resource.type=\"k8s_container\" $${ClusterName} $${JobName} $${JobIndex}"
+              "filter": "metric.type=\"kubernetes.io/container/cpu/core_usage_time\" resource.type=\"k8s_container\" $${ClusterName} $${JobName} $${PodName}"
             }
           }
         }
@@ -42,7 +42,7 @@
       },
       "dataSets": [
         {
-          "legendTemplate": "Cluster: $${resource.labels.cluster_name} Job: $${metadata.user_labels\\.jobset\\.sigs\\.k8s\\.io/jobset-name} JobIndex: $${metadata.user_labels\\.jobset\\.sigs\\.k8s\\.io/job-index}",
+          "legendTemplate": "Cluster: $${resource.labels.cluster_name} Job: $${metadata.user_labels\\.jobset\\.sigs\\.k8s\\.io/jobset-name} Pod: $${resource.labels.pod_name}",
           "minAlignmentPeriod": "60s",
           "plotType": "LINE",
           "targetAxis": "Y1",
@@ -52,7 +52,7 @@
                 "alignmentPeriod": "60s",
                 "perSeriesAligner": "ALIGN_RATE"
               },
-              "filter": "metric.type=\"kubernetes.io/container/cpu/core_usage_time\" resource.type=\"k8s_container\" $${ClusterName} $${JobName} $${JobIndex}",
+              "filter": "metric.type=\"kubernetes.io/container/cpu/core_usage_time\" resource.type=\"k8s_container\" $${ClusterName} $${JobName} $${PodName}",
               "pickTimeSeriesFilter": {
                 "direction": "TOP",
                 "numTimeSeries": ${OUTLIER_COUNT},
@@ -64,7 +64,7 @@
                 "groupByFields": [
                   "resource.label.\"cluster_name\"",
                   "metadata.user_labels.\"jobset.sigs.k8s.io/jobset-name\"",
-                  "metadata.user_labels.\"jobset.sigs.k8s.io/job-index\""
+                  "resource.label.\"pod_name\""
                 ],
                 "perSeriesAligner": "ALIGN_NONE"
               }
@@ -93,7 +93,7 @@
       },
       "dataSets": [
         {
-          "legendTemplate": "Cluster: $${resource.labels.cluster_name} Job: $${metadata.user_labels\\.jobset\\.sigs\\.k8s\\.io/jobset-name} JobIndex: $${metadata.user_labels\\.jobset\\.sigs\\.k8s\\.io/job-index}",
+          "legendTemplate": "Cluster: $${resource.labels.cluster_name} Job: $${metadata.user_labels\\.jobset\\.sigs\\.k8s\\.io/jobset-name} Pod: $${resource.labels.pod_name}",
           "minAlignmentPeriod": "60s",
           "plotType": "LINE",
           "targetAxis": "Y1",
@@ -103,7 +103,7 @@
                 "alignmentPeriod": "60s",
                 "perSeriesAligner": "ALIGN_RATE"
               },
-              "filter": "metric.type=\"kubernetes.io/container/cpu/core_usage_time\" resource.type=\"k8s_container\" $${ClusterName} $${JobName} $${JobIndex}",
+              "filter": "metric.type=\"kubernetes.io/container/cpu/core_usage_time\" resource.type=\"k8s_container\" $${ClusterName} $${JobName} $${PodName}",
               "pickTimeSeriesFilter": {
                 "direction": "TOP",
                 "numTimeSeries": ${OUTLIER_COUNT},
@@ -115,7 +115,7 @@
                 "groupByFields": [
                   "resource.label.\"cluster_name\"",
                   "metadata.user_labels.\"jobset.sigs.k8s.io/jobset-name\"",
-                  "metadata.user_labels.\"jobset.sigs.k8s.io/job-index\""
+                  "resource.label.\"pod_name\""
                 ],
                 "perSeriesAligner": "ALIGN_NONE"
               }
