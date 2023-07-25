@@ -17,7 +17,7 @@
                 "alignmentPeriod": "60s",
                 "perSeriesAligner": "ALIGN_NONE"
               },
-              "filter": "metric.type=\"tpu.googleapis.com/network/sent_bytes_count\" resource.type=\"tpu_worker\""
+              "filter": "metric.type=\"tpu.googleapis.com/network/sent_bytes_count\" resource.type=\"tpu_worker\" resource.label.\"node_id\"=monitoring.regex.full_match(\"${NODE_PREFIX_REGEX}\")"
             }
           }
         }
@@ -53,7 +53,7 @@
                 "alignmentPeriod": "60s",
                 "perSeriesAligner": "ALIGN_RATE"
               },
-              "filter": "metric.type=\"tpu.googleapis.com/network/sent_bytes_count\" resource.type=\"tpu_worker\"",
+              "filter": "metric.type=\"tpu.googleapis.com/network/sent_bytes_count\" resource.type=\"tpu_worker\" resource.label.\"node_id\"=monitoring.regex.full_match(\"${NODE_PREFIX_REGEX}\")",
               "pickTimeSeriesFilter": {
                 "direction": "TOP",
                 "numTimeSeries": ${OUTLIER_COUNT},
@@ -94,7 +94,7 @@
                 "alignmentPeriod": "60s",
                 "perSeriesAligner": "ALIGN_RATE"
               },
-              "filter": "metric.type=\"tpu.googleapis.com/network/sent_bytes_count\" resource.type=\"tpu_worker\"",
+              "filter": "metric.type=\"tpu.googleapis.com/network/sent_bytes_count\" resource.type=\"tpu_worker\" resource.label.\"node_id\"=monitoring.regex.full_match(\"${NODE_PREFIX_REGEX}\")",
               "pickTimeSeriesFilter": {
                 "direction": "TOP",
                 "numTimeSeries": ${OUTLIER_COUNT},
@@ -135,7 +135,7 @@
                 "alignmentPeriod": "60s",
                 "perSeriesAligner": "ALIGN_NONE"
               },
-              "filter": "metric.type=\"tpu.googleapis.com/network/received_bytes_count\" resource.type=\"tpu_worker\""
+              "filter": "metric.type=\"tpu.googleapis.com/network/received_bytes_count\" resource.type=\"tpu_worker\" resource.label.\"node_id\"=monitoring.regex.full_match(\"${NODE_PREFIX_REGEX}\")"
             }
           }
         }
@@ -171,7 +171,7 @@
                 "alignmentPeriod": "60s",
                 "perSeriesAligner": "ALIGN_RATE"
               },
-              "filter": "metric.type=\"tpu.googleapis.com/network/received_bytes_count\" resource.type=\"tpu_worker\"",
+              "filter": "metric.type=\"tpu.googleapis.com/network/received_bytes_count\" resource.type=\"tpu_worker\" resource.label.\"node_id\"=monitoring.regex.full_match(\"${NODE_PREFIX_REGEX}\")",
               "pickTimeSeriesFilter": {
                 "direction": "TOP",
                 "numTimeSeries": ${OUTLIER_COUNT},
@@ -212,7 +212,7 @@
                 "alignmentPeriod": "60s",
                 "perSeriesAligner": "ALIGN_RATE"
               },
-              "filter": "metric.type=\"tpu.googleapis.com/network/received_bytes_count\" resource.type=\"tpu_worker\"",
+              "filter": "metric.type=\"tpu.googleapis.com/network/received_bytes_count\" resource.type=\"tpu_worker\" resource.label.\"node_id\"=monitoring.regex.full_match(\"${NODE_PREFIX_REGEX}\")",
               "pickTimeSeriesFilter": {
                 "direction": "TOP",
                 "numTimeSeries": ${OUTLIER_COUNT},

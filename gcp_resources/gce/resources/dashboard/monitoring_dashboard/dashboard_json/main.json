@@ -4,10 +4,6 @@
   "dashboardFilters": [
    {
      "filterType": "RESOURCE_LABEL",
-     "labelKey": "node_id"
-   },
-   {
-     "filterType": "RESOURCE_LABEL",
      "labelKey": "worker_id"
    }
   ],

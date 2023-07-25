@@ -19,11 +19,13 @@ variable "project_name" {
 
 variable "monitoring_dashboard_config" {
   type = object({
+    node_prefix : optional(string),
     outlier_count : optional(number)
   })
   description = <<EOF
   Configuration for monitoring dashboard:
   {
+    "node_prefix": "prefix used to generate the node name in multislice node provision, default to empty string",
     "outlier_count": "number of outliers to show on dashboard, default to 10 if not set"
   }
   Enter {} to set default configuration for monitoring dashboard.

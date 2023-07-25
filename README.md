@@ -74,12 +74,16 @@ Run `terraform init && terraform apply` inside `gcp_resources/gce` directory to 
 
 Run `terraform init && terraform apply` inside `gcp_resources/gke` directory to deploy all the resources mentioned above for TPU workloads running on GKE. You will be prompted to provide values for some input variables. After confirming the action, all the resources will get automatically deployed in your gcp project.
 
-Note: Please check the below guide for GCE/GKE specific prerequisites.
+> **_NOTE:_** Please check the below guide for more details about GCE/GKE specific resources and prerequisites.
 
 Follow the below guide to deploy the resources individually:
 ### Monitoring Dashboard
 #### GCE
 Run `terraform init && terraform apply` inside `gcp_resources/gce/resources/dashboard/monitoring_dashboard/` to deploy only monitoring dashboard for GCE in your gcp project.
+
+If the `node_prefix` parameter is not specified in the input variable `var.monitoring_dashboard_config` or is set to an empty string, the metrics on the dashboard will plot the data points for all TPU VMs in your GCP project.
+
+For instance, if you provide `{"node_prefix": "test"}` as the input value for the input variable `var.monitoring_dashboard_config`, then the metrics on the monitoring dashboard will only show the data points for the TPU VMs with node names that start with `test`. Refer to this [doc](https://cloud.google.com/sdk/gcloud/reference/alpha/compute/tpus/queued-resources/create#--node-prefix) for more information on node prefix for TPUs in multislice.
 
 #### GKE
 Run `terraform init && terraform apply` inside `gcp_resources/gke/resources/dashboard/monitoring_dashboard/` to deploy only monitoring dashboard for GKE in your gcp project.

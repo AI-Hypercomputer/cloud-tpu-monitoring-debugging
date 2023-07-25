@@ -13,24 +13,29 @@
 # limitations under the License.
 
 locals {
-  outlier_count = var.monitoring_dashboard_config.outlier_count == null ? 10 : var.monitoring_dashboard_config.outlier_count
+  outlier_count     = var.monitoring_dashboard_config.outlier_count == null ? 10 : var.monitoring_dashboard_config.outlier_count
+  node_prefix_regex = var.monitoring_dashboard_config.node_prefix == null ? "[a-z0-9-]*" : "${var.monitoring_dashboard_config.node_prefix}[a-z0-9-]*"
   dashboard_json = templatefile("${path.module}/dashboard_json/main.json",
     {
       TILE_1 = templatefile("${path.module}/dashboard_json/cpu-utilization.json",
         {
-          OUTLIER_COUNT = local.outlier_count
+          OUTLIER_COUNT     = local.outlier_count,
+          NODE_PREFIX_REGEX = local.node_prefix_regex
       }),
       TILE_2 = templatefile("${path.module}/dashboard_json/tensorcore-idle-duration.json",
         {
-          OUTLIER_COUNT = local.outlier_count
+          OUTLIER_COUNT     = local.outlier_count,
+          NODE_PREFIX_REGEX = local.node_prefix_regex
       }),
       TILE_3 = templatefile("${path.module}/dashboard_json/memory-usage.json",
         {
-          OUTLIER_COUNT = local.outlier_count
+          OUTLIER_COUNT     = local.outlier_count,
+          NODE_PREFIX_REGEX = local.node_prefix_regex
       }),
       TILE_4 = templatefile("${path.module}/dashboard_json/network-bytes.json",
         {
-          OUTLIER_COUNT = local.outlier_count
+          OUTLIER_COUNT     = local.outlier_count,
+          NODE_PREFIX_REGEX = local.node_prefix_regex
       })
   })
 }
