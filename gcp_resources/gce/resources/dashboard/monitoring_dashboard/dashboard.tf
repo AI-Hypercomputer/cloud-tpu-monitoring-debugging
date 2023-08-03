@@ -14,7 +14,7 @@
 
 locals {
   outlier_count     = var.monitoring_dashboard_config.outlier_count == null ? 10 : var.monitoring_dashboard_config.outlier_count
-  node_prefix_regex = var.monitoring_dashboard_config.node_prefix == null ? "[a-z0-9-]*" : "${var.monitoring_dashboard_config.node_prefix}[a-z0-9-]*"
+  node_prefix_regex = var.monitoring_dashboard_config.node_prefix == null ? "[a-z0-9-_]*" : "${var.monitoring_dashboard_config.node_prefix}[a-z0-9-_]*"
   dashboard_json = templatefile("${path.module}/dashboard_json/main.json",
     {
       TILE_1 = templatefile("${path.module}/dashboard_json/cpu-utilization.json",
@@ -33,6 +33,21 @@ locals {
           NODE_PREFIX_REGEX = local.node_prefix_regex
       }),
       TILE_4 = templatefile("${path.module}/dashboard_json/network-bytes.json",
+        {
+          OUTLIER_COUNT     = local.outlier_count,
+          NODE_PREFIX_REGEX = local.node_prefix_regex
+      }),
+      TILE_5 = templatefile("${path.module}/dashboard_json/dcn-transfer-latency.json",
+        {
+          OUTLIER_COUNT     = local.outlier_count,
+          NODE_PREFIX_REGEX = local.node_prefix_regex
+      }),
+      TILE_6 = templatefile("${path.module}/dashboard_json/host-to-device-transfer-latency.json",
+        {
+          OUTLIER_COUNT     = local.outlier_count,
+          NODE_PREFIX_REGEX = local.node_prefix_regex
+      }),
+      TILE_7 = templatefile("${path.module}/dashboard_json/device-to-host-transfer-latency.json",
         {
           OUTLIER_COUNT     = local.outlier_count,
           NODE_PREFIX_REGEX = local.node_prefix_regex

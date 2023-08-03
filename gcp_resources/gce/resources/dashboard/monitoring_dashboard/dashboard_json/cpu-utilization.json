@@ -30,7 +30,8 @@
       }
     }
   },
-  "width": 12
+  "width": 12,
+  "yPos": 1
 },
 {
   "height": 4,
@@ -76,7 +77,7 @@
     }
   },
   "width": 6,
-  "yPos": 4
+  "yPos": 5
 },
 {
   "height": 4,
@@ -123,7 +124,7 @@
   },
   "width": 6,
   "xPos": 6,
-  "yPos": 4
+  "yPos": 5
 },
 {
   "height": 8,
@@ -133,5 +134,6 @@
     },
     "title": "CPU Utilization on TPU Worker"
   },
-  "width": 12
+  "width": 12,
+  "yPos": 1
 }

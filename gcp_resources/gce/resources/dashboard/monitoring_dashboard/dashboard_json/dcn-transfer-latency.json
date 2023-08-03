@@ -1,7 +1,7 @@
 {
   "height": 4,
   "widget": {
-    "title": "TPU VM - Memory Usage Stats",
+    "title": "GCE Instance - DCN Transfer Latency Stats",
     "xyChart": {
       "chartOptions": {
         "mode": "STATS"
@@ -15,9 +15,10 @@
             "timeSeriesFilter": {
               "aggregation": {
                 "alignmentPeriod": "60s",
-                "perSeriesAligner": "ALIGN_NONE"
+                "crossSeriesReducer": "REDUCE_PERCENTILE_50",
+                "perSeriesAligner": "ALIGN_SUM"
               },
-              "filter": "metric.type=\"tpu.googleapis.com/memory/usage\" resource.type=\"tpu_worker\" resource.label.\"node_id\"=monitoring.regex.full_match(\"${NODE_PREFIX_REGEX}\")"
+              "filter": "metric.type=\"custom.googleapis.com/dcn_transfer_latency\" resource.type=\"gce_instance\" metric.label.\"node_id\"=monitoring.regex.full_match(\"${NODE_PREFIX_REGEX}\")"
             }
           }
         }
@@ -31,19 +32,19 @@
     }
   },
   "width": 12,
-  "yPos": 9
+  "yPos": 42
 },
 {
   "height": 4,
   "widget": {
-    "title": "TPU VM - Memory Usage Outliers [MEAN]",
+    "title": "GCE Instance - DCN Transfer Latency Outliers [p50]",
     "xyChart": {
       "chartOptions": {
         "mode": "COLOR"
       },
       "dataSets": [
         {
-          "legendTemplate": "TPU Node: $${resource.labels.node_id} Worker ID: $${resource.labels.worker_id}",
+          "legendTemplate": "TPU Node: $${metric.labels.node_id} Worker ID: $${metric.labels.worker_id}",
           "minAlignmentPeriod": "60s",
           "plotType": "LINE",
           "targetAxis": "Y1",
@@ -51,18 +52,18 @@
             "timeSeriesFilter": {
               "aggregation": {
                 "alignmentPeriod": "60s",
-                "crossSeriesReducer": "REDUCE_MEAN",
+                "crossSeriesReducer": "REDUCE_PERCENTILE_50",
                 "groupByFields": [
-                  "resource.label.\"node_id\"",
-                  "resource.label.\"worker_id\""
+                  "metric.label.\"node_id\"",
+                  "metric.label.\"worker_id\""
                 ],
-                "perSeriesAligner": "ALIGN_MEAN"
+                "perSeriesAligner": "ALIGN_SUM"
               },
-              "filter": "metric.type=\"tpu.googleapis.com/memory/usage\" resource.type=\"tpu_worker\" resource.label.\"node_id\"=monitoring.regex.full_match(\"${NODE_PREFIX_REGEX}\")",
+              "filter": "metric.type=\"custom.googleapis.com/dcn_transfer_latency\" resource.type=\"gce_instance\" metric.label.\"node_id\"=monitoring.regex.full_match(\"${NODE_PREFIX_REGEX}\")",
               "pickTimeSeriesFilter": {
                 "direction": "TOP",
                 "numTimeSeries": ${OUTLIER_COUNT},
-                "rankingMethod": "METHOD_MEAN"
+                "rankingMethod": "METHOD_MAX"
               }
             }
           }
@@ -77,19 +78,19 @@
     }
   },
   "width": 6,
-  "yPos": 13
+  "yPos": 46
 },
 {
   "height": 4,
   "widget": {
-    "title": "TPU VM - Memory Usage Outliers [MAX]",
+    "title": "GCE Instance - DCN Transfer Latency Outliers [p99]",
     "xyChart": {
       "chartOptions": {
         "mode": "COLOR"
       },
       "dataSets": [
         {
-          "legendTemplate": "TPU Node: $${resource.labels.node_id} Worker ID: $${resource.labels.worker_id}",
+          "legendTemplate": "TPU Node: $${metric.labels.node_id} Worker ID: $${metric.labels.worker_id}",
           "minAlignmentPeriod": "60s",
           "plotType": "LINE",
           "targetAxis": "Y1",
@@ -97,14 +98,14 @@
             "timeSeriesFilter": {
               "aggregation": {
                 "alignmentPeriod": "60s",
-                "crossSeriesReducer": "REDUCE_MAX",
+                "crossSeriesReducer": "REDUCE_PERCENTILE_99",
                 "groupByFields": [
-                  "resource.label.\"node_id\"",
-                  "resource.label.\"worker_id\""
+                  "metric.label.\"node_id\"",
+                  "metric.label.\"worker_id\""
                 ],
-                "perSeriesAligner": "ALIGN_MAX"
+                "perSeriesAligner": "ALIGN_SUM"
               },
-              "filter": "metric.type=\"tpu.googleapis.com/memory/usage\" resource.type=\"tpu_worker\" resource.label.\"node_id\"=monitoring.regex.full_match(\"${NODE_PREFIX_REGEX}\")",
+              "filter": "metric.type=\"custom.googleapis.com/dcn_transfer_latency\" resource.type=\"gce_instance\" metric.label.\"node_id\"=monitoring.regex.full_match(\"${NODE_PREFIX_REGEX}\")",
               "pickTimeSeriesFilter": {
                 "direction": "TOP",
                 "numTimeSeries": ${OUTLIER_COUNT},
@@ -124,7 +125,7 @@
   },
   "width": 6,
   "xPos": 6,
-  "yPos": 13
+  "yPos": 46
 },
 {
   "height": 8,
@@ -132,8 +133,8 @@
     "collapsibleGroup": {
       "collapsed": false
     },
-    "title": "Memory Usage by TPU VM"
+    "title": "DCN Transfer Latency"
   },
   "width": 12,
-  "yPos": 9
+  "yPos": 42
 }

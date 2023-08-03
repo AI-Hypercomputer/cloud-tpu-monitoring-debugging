@@ -31,7 +31,7 @@
     }
   },
   "width": 12,
-  "yPos": 24
+  "yPos": 25
 },
 {
   "height": 4,
@@ -72,7 +72,7 @@
     }
   },
   "width": 6,
-  "yPos": 28
+  "yPos": 29
 },
 {
   "height": 4,
@@ -114,7 +114,7 @@
   },
   "width": 6,
   "xPos": 6,
-  "yPos": 28
+  "yPos": 29
 },
 {
   "height": 4,
@@ -149,7 +149,7 @@
     }
   },
   "width": 12,
-  "yPos": 32
+  "yPos": 33
 },
 {
   "height": 4,
@@ -190,7 +190,7 @@
     }
   },
   "width": 6,
-  "yPos": 36
+  "yPos": 37
 },
 {
   "height": 4,
@@ -232,7 +232,7 @@
   },
   "width": 6,
   "xPos": 6,
-  "yPos": 36
+  "yPos": 37
 },
 {
   "height": 16,
@@ -243,5 +243,5 @@
     "title": "Network Bytes Received and Sent by TPU VM"
   },
   "width": 12,
-  "yPos": 24
+  "yPos": 25
 }

@@ -10,10 +10,35 @@
   "mosaicLayout": {
     "columns": 12,
     "tiles": [
+      {
+        "height": 1,
+        "widget": {
+          "title": "TPU Worker Metrics",
+          "text": {
+            "content": ""
+          }
+        },
+        "width": 12,
+        "yPos": 0
+      },
       ${TILE_1},
       ${TILE_2},
       ${TILE_3},
-      ${TILE_4}
+      ${TILE_4},
+      {
+        "height": 1,
+        "widget": {
+          "title": "Megascale Metrics",
+          "text": {
+            "content": ""
+          }
+        },
+        "width": 12,
+        "yPos": 41
+      },
+      ${TILE_5},
+      ${TILE_6},
+      ${TILE_7}
     ]
   }
  }

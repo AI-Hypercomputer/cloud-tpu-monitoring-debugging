@@ -31,7 +31,7 @@
     }
   },
   "width": 12,
-  "yPos": 16
+  "yPos": 17
 },
 {
   "height": 4,
@@ -77,7 +77,7 @@
     }
   },
   "width": 6,
-  "yPos": 20
+  "yPos": 21
 },
 {
   "height": 4,
@@ -124,7 +124,7 @@
   },
   "width": 6,
   "xPos": 6,
-  "yPos": 20
+  "yPos": 21
 },
 {
   "height": 8,
@@ -135,5 +135,5 @@
     "title": "Tensorcore Idle Duration of TPU Chip"
   },
   "width": 12,
-  "yPos": 16
+  "yPos": 17
 }
