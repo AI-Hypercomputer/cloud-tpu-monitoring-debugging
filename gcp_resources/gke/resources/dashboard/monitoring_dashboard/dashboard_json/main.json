@@ -23,7 +23,9 @@
     "tiles": [
       ${TILE_1},
       ${TILE_2},
-      ${TILE_3}
+      ${TILE_3},
+      ${TILE_4},
+      ${TILE_5}
     ]
   }
  }

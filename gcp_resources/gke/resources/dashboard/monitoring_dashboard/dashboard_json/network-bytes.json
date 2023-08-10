@@ -31,7 +31,7 @@
     }
   },
   "width": 12,
-  "yPos": 16
+  "yPos": 32
 },
 {
   "height": 4,
@@ -82,7 +82,7 @@
     }
   },
   "width": 6,
-  "yPos": 20
+  "yPos": 36
 },
 {
   "height": 4,
@@ -134,7 +134,7 @@
   },
   "width": 6,
   "xPos": 6,
-  "yPos": 20
+  "yPos": 36
 },
 {
   "height": 4,
@@ -169,7 +169,7 @@
     }
   },
   "width": 12,
-  "yPos": 24
+  "yPos": 40
 },
 {
   "height": 4,
@@ -220,7 +220,7 @@
     }
   },
   "width": 6,
-  "yPos": 28
+  "yPos": 44
 },
 {
   "height": 4,
@@ -272,7 +272,7 @@
   },
   "width": 6,
   "xPos": 6,
-  "yPos": 28
+  "yPos": 44
 },
 {
   "height": 16,
@@ -283,5 +283,5 @@
     "title": "Network Bytes Sent and Received by TPU Slice"
   },
   "width": 12,
-  "yPos": 16
+  "yPos": 32
 }

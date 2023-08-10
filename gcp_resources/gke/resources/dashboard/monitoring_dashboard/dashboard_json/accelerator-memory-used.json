@@ -1,7 +1,7 @@
 {
   "height": 4,
   "widget": {
-    "title": "Memory Usage Stats",
+    "title": "Accelerator Memory Used Stats",
     "xyChart": {
       "chartOptions": {
         "mode": "STATS"
@@ -15,9 +15,9 @@
             "timeSeriesFilter": {
               "aggregation": {
                 "alignmentPeriod": "60s",
-                "perSeriesAligner": "ALIGN_SUM"
+                "perSeriesAligner": "ALIGN_NONE"
               },
-              "filter": "metric.type=\"kubernetes.io/container/memory/used_bytes\" resource.type=\"k8s_container\" $${ClusterName} $${JobName} $${PodName}"
+              "filter": "metric.type=\"kubernetes.io/container/accelerator/memory_used\" resource.type=\"k8s_container\" $${ClusterName} $${JobName} $${PodName}"
             }
           }
         }
@@ -31,12 +31,12 @@
     }
   },
   "width": 12,
-  "yPos": 8
+  "yPos": 16
 },
 {
   "height": 4,
   "widget": {
-    "title": "Memory Usage Outliers [MEAN]",
+    "title": "Accelerator Memory Used Outliers [MEAN]",
     "xyChart": {
       "chartOptions": {
         "mode": "COLOR"
@@ -51,19 +51,23 @@
             "timeSeriesFilter": {
               "aggregation": {
                 "alignmentPeriod": "60s",
+                "perSeriesAligner": "ALIGN_NONE"
+              },
+              "filter": "metric.type=\"kubernetes.io/container/accelerator/memory_used\" resource.type=\"k8s_container\" $${ClusterName} $${JobName} $${PodName}",
+              "pickTimeSeriesFilter": {
+                "direction": "TOP",
+                "numTimeSeries": ${OUTLIER_COUNT},
+                "rankingMethod": "METHOD_MEAN"
+              },
+              "secondaryAggregation": {
+                "alignmentPeriod": "60s",
                 "crossSeriesReducer": "REDUCE_MEAN",
                 "groupByFields": [
                   "resource.label.\"cluster_name\"",
                   "metadata.user_labels.\"jobset.sigs.k8s.io/jobset-name\"",
                   "resource.label.\"pod_name\""
                 ],
-                "perSeriesAligner": "ALIGN_MEAN"
-              },
-              "filter": "metric.type=\"kubernetes.io/container/memory/used_bytes\" resource.type=\"k8s_container\" $${ClusterName} $${JobName} $${PodName}",
-              "pickTimeSeriesFilter": {
-                "direction": "TOP",
-                "numTimeSeries": ${OUTLIER_COUNT},
-                "rankingMethod": "METHOD_MEAN"
+                "perSeriesAligner": "ALIGN_NONE"
               }
             }
           }
@@ -78,12 +82,12 @@
     }
   },
   "width": 6,
-  "yPos": 12
+  "yPos": 20
 },
 {
   "height": 4,
   "widget": {
-    "title": "Memory Usage Outliers [MAX]",
+    "title": "Accelerator Memory Used Outliers [MAX]",
     "xyChart": {
       "chartOptions": {
         "mode": "COLOR"
@@ -98,19 +102,23 @@
             "timeSeriesFilter": {
               "aggregation": {
                 "alignmentPeriod": "60s",
+                "perSeriesAligner": "ALIGN_RATE"
+              },
+              "filter": "metric.type=\"kubernetes.io/container/accelerator/memory_used\" resource.type=\"k8s_container\" $${ClusterName} $${JobName} $${PodName}",
+              "pickTimeSeriesFilter": {
+                "direction": "TOP",
+                "numTimeSeries": ${OUTLIER_COUNT},
+                "rankingMethod": "METHOD_MAX"
+              },
+              "secondaryAggregation": {
+                "alignmentPeriod": "60s",
                 "crossSeriesReducer": "REDUCE_MAX",
                 "groupByFields": [
                   "resource.label.\"cluster_name\"",
                   "metadata.user_labels.\"jobset.sigs.k8s.io/jobset-name\"",
                   "resource.label.\"pod_name\""
                 ],
-                "perSeriesAligner": "ALIGN_MAX"
-              },
-              "filter": "metric.type=\"kubernetes.io/container/memory/used_bytes\" resource.type=\"k8s_container\" $${ClusterName} $${JobName} $${PodName}",
-              "pickTimeSeriesFilter": {
-                "direction": "TOP",
-                "numTimeSeries": ${OUTLIER_COUNT},
-                "rankingMethod": "METHOD_MAX"
+                "perSeriesAligner": "ALIGN_NONE"
               }
             }
           }
@@ -126,7 +134,7 @@
   },
   "width": 6,
   "xPos": 6,
-  "yPos": 12
+  "yPos": 20
 },
 {
   "height": 8,
@@ -134,8 +142,8 @@
     "collapsibleGroup": {
       "collapsed": false
     },
-    "title": "Memory Usage by TPU Slice"
+    "title": "Accelerator Memory Used by TPU Slice"
   },
   "width": 12,
-  "yPos": 8
+  "yPos": 16
 }

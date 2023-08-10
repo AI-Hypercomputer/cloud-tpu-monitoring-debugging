@@ -24,7 +24,15 @@ locals {
         {
           OUTLIER_COUNT = local.outlier_count
       }),
-      TILE_3 = templatefile("${path.module}/dashboard_json/network-bytes.json",
+      TILE_3 = templatefile("${path.module}/dashboard_json/accelerator-memory-used.json",
+        {
+          OUTLIER_COUNT = local.outlier_count
+      }),
+      TILE_4 = templatefile("${path.module}/dashboard_json/duty-cycle.json",
+        {
+          OUTLIER_COUNT = local.outlier_count
+      }),
+      TILE_5 = templatefile("${path.module}/dashboard_json/network-bytes.json",
         {
           OUTLIER_COUNT = local.outlier_count
       })
