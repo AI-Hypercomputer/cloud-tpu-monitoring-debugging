@@ -15,7 +15,7 @@
             "timeSeriesFilter": {
               "aggregation": {
                 "alignmentPeriod": "60s",
-                "perSeriesAligner": "ALIGN_NONE"
+                "perSeriesAligner": "ALIGN_MEAN"
               },
               "filter": "metric.type=\"kubernetes.io/container/accelerator/duty_cycle\" resource.type=\"k8s_container\" $${ClusterName} $${JobName} $${PodName}"
             }
