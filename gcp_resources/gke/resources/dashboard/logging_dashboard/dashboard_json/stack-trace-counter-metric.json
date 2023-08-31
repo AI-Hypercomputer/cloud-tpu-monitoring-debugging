@@ -28,6 +28,7 @@
         {
           "minAlignmentPeriod": "600s",
           "timeSeriesQuery": {
+            "outputFullDuration": true,
             "timeSeriesFilter": {
               "aggregation": {
                 "alignmentPeriod": "600s",
