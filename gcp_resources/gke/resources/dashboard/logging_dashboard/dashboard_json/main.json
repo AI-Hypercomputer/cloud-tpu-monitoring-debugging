@@ -4,11 +4,13 @@
   "dashboardFilters": [
     {
       "filterType": "RESOURCE_LABEL",
-      "labelKey": "cluster_name"
+      "labelKey": "cluster_name",
+      "templateVariable": "ClusterName"
     },
     {
-      "filterType": "RESOURCE_LABEL",
-      "labelKey": "namespace_name"
+      "filterType": "USER_METADATA_LABEL",
+      "labelKey": "jobset.sigs.k8s.io/jobset-name",
+      "templateVariable": "JobName"
     }
   ],
   "mosaicLayout": {

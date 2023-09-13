@@ -34,7 +34,7 @@
                 "alignmentPeriod": "600s",
                 "perSeriesAligner": "ALIGN_RATE"
               },
-              "filter": "metric.type=\"logging.googleapis.com/user/${METRIC_NAME}\" resource.type=\"k8s_container\"",
+              "filter": "metric.type=\"logging.googleapis.com/user/${METRIC_NAME}\" resource.type=\"k8s_container\" $${ClusterName} $${JobName}",
               "secondaryAggregation": {
                 "alignmentPeriod": "600s",
                 "crossSeriesReducer": "REDUCE_MEAN",

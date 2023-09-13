@@ -2,7 +2,7 @@
   "height": 6,
   "widget": {
     "logsPanel": {
-      "filter": "resource.type=\"k8s_container\" AND \nresource.labels.container_name=~\"[a-z-0-9]*stacktrace[a-z-0-9]*\"\n",
+      "filter": "resource.type=\"k8s_container\" AND resource.labels.container_name=~\"[a-z-0-9]*stacktrace[a-z-0-9]*\" AND $${ClusterName}",
       "resourceNames": [
         "projects/${PROJECT_NUMBER}"
       ]
