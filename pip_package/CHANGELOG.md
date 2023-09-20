@@ -34,15 +34,18 @@ To release a new version (e.g. from `1.0.0` -> `2.0.0`):
 
 -->
 
+## [0.1.2] - 2023-09-20
+* Improved stack trace readability and clarity by adding a message for more information
+
 ## [0.1.1] - 2023-06-21
 * Bug Fixes
   * Fixes dumping of stack traces on the console when exceptions like `AssertionError`, `tensorflow.python.framework.errors_impl.NotFoundError` are thrown when `collect_stack_trace=True` and `stack_trace_to_cloud=False`.
 * Updated README
 
 ## [0.1.0] - 2023-06-08
-
 * Initial release of cloud-tpu-diagnostics PyPI package
 * FEATURE: Contains debug module to collect stack traces on faults
 
+[0.1.2]: https://github.com/google/cloud-tpu-monitoring-debugging/compare/v0.1.1...v0.1.2
 [0.1.1]: https://github.com/google/cloud-tpu-monitoring-debugging/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/google/cloud-tpu-monitoring-debugging/releases/tag/v0.1.0
