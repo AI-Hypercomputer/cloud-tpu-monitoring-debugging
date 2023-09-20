@@ -25,6 +25,20 @@ _stack_trace_file_obj = None
 logger = logging.getLogger(__name__)
 
 
+def user_signal_handler_wrapper(file_descriptor, interval):
+  def user_signal_handler(unused_signum, unused_frame):
+    message = (
+        "INFO: Not a crash. cloud-tpu-diagnostics emits a"
+        f" stack trace snapshot every {interval} seconds.\n"
+    )
+    if file_descriptor is not sys.stderr:
+      message = message.encode()
+    file_descriptor.write(message)
+    faulthandler.dump_traceback(file_descriptor, all_threads=False)
+
+  return user_signal_handler
+
+
 def enable_stack_trace_dumping(stack_trace_config):
   """Enables stack trace dumping.
 
@@ -50,6 +64,15 @@ def enable_stack_trace_dumping(stack_trace_config):
     # Register SIGUSR1 signal to faulthandler
     faulthandler.register(
         signal.SIGUSR1, all_threads=False, file=_stack_trace_file_obj
+    )
+
+    # Register handler for SIGUSR1 to dump traces
+    signal.signal(
+        signal.SIGUSR1,
+        user_signal_handler_wrapper(
+            _stack_trace_file_obj,
+            stack_trace_config.stack_trace_interval_seconds,
+        ),
     )
   except Exception as e:  # pylint: disable=broad-exception-caught
     logger.error("Error in enabling dumping of stack trace.", e)

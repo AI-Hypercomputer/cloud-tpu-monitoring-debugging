@@ -18,12 +18,14 @@ import shutil
 import signal
 import subprocess
 import sys
+import tempfile
 import textwrap
 import unittest
 from absl.testing import absltest
 from cloud_tpu_diagnostics.src.config import stack_trace_configuration
 from cloud_tpu_diagnostics.src.stack_trace import disable_stack_trace_dumping
 from cloud_tpu_diagnostics.src.stack_trace import enable_stack_trace_dumping
+from cloud_tpu_diagnostics.src.stack_trace import user_signal_handler_wrapper
 from cloud_tpu_diagnostics.src.util import default
 
 class StackTraceTest(absltest.TestCase):
@@ -37,6 +39,7 @@ class StackTraceTest(absltest.TestCase):
     self.test_file = os.path.join(
         package_dir, 'src/util/stack_trace_test_util.py'
     )
+    self.stack_trace_module = os.path.join(package_dir, 'src/stack_trace.py')
 
   def tearDown(self):
     super().tearDown()
@@ -117,15 +120,49 @@ class StackTraceTest(absltest.TestCase):
     disable_stack_trace_dumping(stack_trace_config)
     self.assertEqual(faulthandler.is_enabled(), False)
 
+  def testUserSignalHandlerForStderr(self):
+    file_obj = tempfile.NamedTemporaryFile('r+')
+    sys.stderr = file_obj
+    user_signal_handler = user_signal_handler_wrapper(sys.stderr, 30)
+    user_signal_handler(signal.SIGUSR1, None)
+    with open(file_obj.name, 'rb') as f:
+      data = f.readlines()
+      self.assertEqual(
+          data[0],
+          b'INFO: Not a crash. cloud-tpu-diagnostics emits a stack trace'
+          b' snapshot every 30 seconds.\n',
+      )
+
+  def testUserSignalHandlerForFile(self):
+    file_obj = tempfile.NamedTemporaryFile('rb+')
+    user_signal_handler = user_signal_handler_wrapper(file_obj, 30)
+    user_signal_handler(signal.SIGUSR1, None)
+    with open(file_obj.name, 'rb') as f:
+      data = f.readlines()
+      self.assertEqual(
+          data[0],
+          b'INFO: Not a crash. cloud-tpu-diagnostics emits a stack trace'
+          b' snapshot every 30 seconds.\n',
+      )
+
   def check_fatal_error(self, line_number, error, signal_name, log_to_cloud):
-    header = r'Stack \(most recent call first\)'
-    regex = ''
     if error:
+      header = r'Stack \(most recent call first\)'
       regex = """
           {error}
-          """
-    regex += """
+          
           {header}:
+            File "{filename}", line {line_number} in <module>
+          """
+    else:
+      header = (
+          r'INFO: Not a crash. cloud\-tpu\-diagnostics emits a stack trace'
+          r' snapshot every 600 seconds.\n'
+          r'Stack \(most recent call first\)'
+      )
+      regex = """
+          {header}:
+            File "{stack_trace_module}", line 23 in user_signal_handler
             File "{filename}", line {line_number} in <module>
           """
     regex = (
@@ -134,6 +171,7 @@ class StackTraceTest(absltest.TestCase):
             error=error,
             header=header,
             filename=self.test_file,
+            stack_trace_module=self.stack_trace_module,
             line_number=line_number,
         )
         .strip()
