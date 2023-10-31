@@ -45,9 +45,7 @@ def stop_debugging(debug_config):
 
 
 def send_user_signal(stack_trace_interval_seconds):
-  """Send SIGUSR1 signal to non-daemon threads after every stack_trace_interval_seconds seconds."""
+  """Send SIGUSR1 signal to main thread after every stack_trace_interval_seconds seconds."""
   while True:
     time.sleep(stack_trace_interval_seconds)
-    for thread in threading.enumerate():
-      if not thread.daemon:
-        signal.pthread_kill(thread.ident, signal.SIGUSR1)
+    signal.pthread_kill(threading.main_thread().ident, signal.SIGUSR1)
