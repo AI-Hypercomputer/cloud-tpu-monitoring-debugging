@@ -25,7 +25,7 @@ infrastructure based on configuration files. This repository will help the
 customers to deploy various google cloud resources via script, without any
 manual effort.
 
-[cloud-tpu-diagnostics PyPI package]((https://pypi.org/project/cloud-tpu-diagnostics)) contains all the logic to monitor, debug and profile the jobs running on Cloud TPU.
+[cloud-tpu-diagnostics PyPI package](https://pypi.org/project/cloud-tpu-diagnostics) contains all the logic to monitor, debug and profile the jobs running on Cloud TPU.
 
 ## Getting Started with Terraform
 

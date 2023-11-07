@@ -41,6 +41,7 @@ if __name__ == '__main__':
       stack_trace_config=stack_trace_configuration.StackTraceConfig(
           collect_stack_trace=args.collect_stack_trace,
           stack_trace_to_cloud=args.log_to_cloud,
+          stack_trace_interval_seconds=1,
       ),
   )
   diagnostic_config = diagnostic_configuration.DiagnosticConfig(

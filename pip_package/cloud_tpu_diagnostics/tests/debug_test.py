@@ -29,7 +29,8 @@ class DebugTest(absltest.TestCase):
     debug_config = debug_configuration.DebugConfig(
         stack_trace_config=stack_trace_configuration.StackTraceConfig(
             collect_stack_trace=True,
-            stack_trace_to_cloud=False,
+            stack_trace_to_cloud=True,
+            stack_trace_interval_seconds=1,
         ),
     )
     start_debugging(debug_config)
@@ -38,15 +39,28 @@ class DebugTest(absltest.TestCase):
         filter(lambda thread: thread.daemon is True, threading.enumerate())
     )
     self.assertLen(daemon_thread_list, 1)
+    stop_debugging(debug_config)
+    self.assertEqual(threading.active_count(), 1)
+    daemon_thread_list = list(
+        filter(lambda thread: thread.daemon is True, threading.enumerate())
+    )
+    self.assertLen(daemon_thread_list, 0)
 
   def testDaemonThreadNotRunningWhenCollectStackTraceFalse(self):
     debug_config = debug_configuration.DebugConfig(
         stack_trace_config=stack_trace_configuration.StackTraceConfig(
             collect_stack_trace=False,
-            stack_trace_to_cloud=False,
+            stack_trace_to_cloud=True,
+            stack_trace_interval_seconds=1,
         ),
     )
     start_debugging(debug_config)
+    self.assertEqual(threading.active_count(), 1)
+    daemon_thread_list = list(
+        filter(lambda thread: thread.daemon is True, threading.enumerate())
+    )
+    self.assertLen(daemon_thread_list, 0)
+    stop_debugging(debug_config)
     self.assertEqual(threading.active_count(), 1)
     daemon_thread_list = list(
         filter(lambda thread: thread.daemon is True, threading.enumerate())
@@ -63,10 +77,16 @@ class DebugTest(absltest.TestCase):
         stack_trace_config=stack_trace_configuration.StackTraceConfig(
             collect_stack_trace=True,
             stack_trace_to_cloud=True,
+            stack_trace_interval_seconds=1,
         ),
     )
     stop_debugging(debug_config)
     disable_stack_trace_dumping_mock.assert_called_once()
+    self.assertEqual(threading.active_count(), 1)
+    daemon_thread_list = list(
+        filter(lambda thread: thread.daemon is True, threading.enumerate())
+    )
+    self.assertLen(daemon_thread_list, 0)
 
   def testSendUserSignalSIGUSR1SignalReceived(self):
     signal.signal(signal.SIGUSR1, user_signal_handler)

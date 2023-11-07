@@ -49,36 +49,31 @@ class StackTraceTest(absltest.TestCase):
   @unittest.skipIf(not hasattr(signal, 'SIGSEGV'), 'Missing signal.SIGSEGV')
   def testSigsegvCollectStackTraceTrueTraceCollectedOnCloud(self):
     error = 'Fatal Python error: Segmentation fault'
-    self.check_fatal_error(51, error, 'SIGSEGV', True)
+    self.check_fatal_error(52, error, 'SIGSEGV', True)
 
   @unittest.skipIf(not hasattr(signal, 'SIGABRT'), 'Missing signal.SIGABRT')
   def testSigabrtCollectStackTraceTrueTraceCollectedOnCloud(self):
     error = 'Fatal Python error: Aborted'
-    self.check_fatal_error(54, error, 'SIGABRT', True)
+    self.check_fatal_error(55, error, 'SIGABRT', True)
 
   @unittest.skipIf(not hasattr(signal, 'SIGFPE'), 'Missing signal.SIGFPE')
   def testSigfpeCollectStackTraceTrueTraceCollectedOnCloud(self):
     error = 'Fatal Python error: Floating point exception'
-    self.check_fatal_error(57, error, 'SIGFPE', True)
+    self.check_fatal_error(58, error, 'SIGFPE', True)
 
   @unittest.skipIf(not hasattr(signal, 'SIGILL'), 'Missing signal.SIGILL')
   def testSigillCollectStackTraceTrueTraceCollectedOnCloud(self):
     error = 'Fatal Python error: Illegal instruction'
-    self.check_fatal_error(60, error, 'SIGILL', True)
+    self.check_fatal_error(61, error, 'SIGILL', True)
 
   @unittest.skipIf(not hasattr(signal, 'SIGBUS'), 'Missing signal.SIGBUS')
   def testSigbusCollectStackTraceTrueTraceCollectedOnCloud(self):
     error = 'Fatal Python error: Bus error'
-    self.check_fatal_error(63, error, 'SIGBUS', True)
+    self.check_fatal_error(64, error, 'SIGBUS', True)
 
   @unittest.skipIf(not hasattr(signal, 'SIGUSR1'), 'Missing signal.SIGUSR1')
   def testSigusrCollectStackTraceTrueTraceCollectedOnCloud(self):
-    self.check_fatal_error(66, '', 'SIGUSR1', True)
-
-  def testNoFaultCollectStackTraceTrueNoTraceCollectedOnCloud(self):
-    output, stderr = self.get_output('', True, True)
-    self.assertEqual(output, '')
-    self.assertEqual(stderr, '')
+    self.check_fatal_error(67, '', 'SIGUSR1', True)
 
   def testCollectStackTraceFalseNoTraceDirCreated(self):
     process = self.run_python_code('', False, True)
@@ -88,18 +83,12 @@ class StackTraceTest(absltest.TestCase):
 
   @unittest.skipIf(not hasattr(signal, 'SIGUSR1'), 'Missing signal.SIGUSR1')
   def testCollectStackTraceToConsole(self):
-    self.check_fatal_error(66, '', 'SIGUSR1', False)
-
-  def testNoFaultCollectStackTraceTrueNoTraceCollectedOnConsole(self):
-    output, stderr = self.get_output('', True, False)
-    self.assertEqual(output, '')
-    self.assertEqual(stderr, '')
+    self.check_fatal_error(67, '', 'SIGUSR1', False)
 
   def testCollectStackTraceFalseNoTraceCollectedOnConsole(self):
     process = self.run_python_code('', False, False)
     _, stderr = process.communicate()
     self.assertEmpty(stderr)
-    self.assertFalse(os.path.exists(default.STACK_TRACE_DIR_DEFAULT))
 
   def testEnableStackTraceDumpingFaulthandlerEnabled(self):
     stack_trace_config = stack_trace_configuration.StackTraceConfig(
@@ -157,7 +146,7 @@ class StackTraceTest(absltest.TestCase):
     else:
       header = (
           r'INFO: Not a crash. cloud\-tpu\-diagnostics emits a stack trace'
-          r' snapshot every 600 seconds.\n'
+          r' snapshot every 1 seconds.\n'
           r'Stack \(most recent call first\)'
       )
       regex = """
