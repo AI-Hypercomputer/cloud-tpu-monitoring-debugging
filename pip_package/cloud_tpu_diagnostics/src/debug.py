@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import logging
 import signal
 import threading
 import time
@@ -23,6 +24,8 @@ from cloud_tpu_diagnostics.src.stack_trace import enable_stack_trace_dumping
 _exit_flag = threading.Event()
 _exit_flag.clear()
 _daemon_thread = None
+logger = logging.getLogger(__name__)
+
 
 def start_debugging(debug_config):
   """Context manager to debug and identify errors."""
@@ -50,7 +53,11 @@ def stop_debugging(debug_config):
     _exit_flag.set()
     # wait for daemon thread to complete
     if _daemon_thread is not None:
+      logger.info(
+          "Waiting for completion of stack trace collection daemon thread."
+      )
       _daemon_thread.join()
+      logger.info("Stack trace collection daemon thread completed.")
     disable_stack_trace_dumping(debug_config.stack_trace_config)
   _exit_flag.clear()
 
@@ -59,4 +66,5 @@ def send_user_signal(stack_trace_interval_seconds):
   """Send SIGUSR1 signal to main thread after every stack_trace_interval_seconds seconds."""
   while not _exit_flag.is_set():
     time.sleep(stack_trace_interval_seconds)
-    signal.pthread_kill(threading.main_thread().ident, signal.SIGUSR1)
+    if not _exit_flag.is_set():
+      signal.pthread_kill(threading.main_thread().ident, signal.SIGUSR1)

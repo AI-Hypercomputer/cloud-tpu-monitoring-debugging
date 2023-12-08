@@ -34,6 +34,10 @@ To release a new version (e.g. from `1.0.0` -> `2.0.0`):
 
 -->
 
+## [0.1.5] - 2023-12-08
+* Raise exception without waiting for the daemon thread to terminate
+* Remove sending user signal in `stop_debugging()` to avoid unnecessary stack traces related to `cloud-tpu-diagnostics` package
+
 ## [0.1.4] - 2023-11-07
 * Gracefully exiting daemon threads
 * Fixed the URL for PyPI package in README
@@ -53,6 +57,7 @@ To release a new version (e.g. from `1.0.0` -> `2.0.0`):
 * Initial release of cloud-tpu-diagnostics PyPI package
 * FEATURE: Contains debug module to collect stack traces on faults
 
+[0.1.5]: https://github.com/google/cloud-tpu-monitoring-debugging/compare/v0.1.4...v0.1.5
 [0.1.4]: https://github.com/google/cloud-tpu-monitoring-debugging/compare/v0.1.3...v0.1.4
 [0.1.3]: https://github.com/google/cloud-tpu-monitoring-debugging/compare/v0.1.2...v0.1.3
 [0.1.2]: https://github.com/google/cloud-tpu-monitoring-debugging/compare/v0.1.1...v0.1.2

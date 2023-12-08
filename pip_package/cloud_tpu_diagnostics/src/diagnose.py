@@ -25,6 +25,7 @@ def diagnose(config):
     start_debugging(config.debug_config)
   try:
     yield
-  finally:
     if config is not None and config.debug_config is not None:
       stop_debugging(config.debug_config)
+  except Exception as e:
+    raise e
