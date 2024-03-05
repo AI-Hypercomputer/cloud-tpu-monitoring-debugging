@@ -25,7 +25,23 @@
       ${TILE_2},
       ${TILE_3},
       ${TILE_4},
-      ${TILE_5}
+      ${TILE_5},
+      {
+        "height": 1,
+        "widget": {
+          "title": "Megascale Metrics",
+          "sectionHeader": {
+            "subtitle": "These metrics are available in GKE version 1.29.1-gke.1016000 or later.  TPU workload must use JAX version 0.4.24.",
+            "dividerBelow": false
+          }
+        },
+        "width": 12,
+        "yPos": 48
+      },
+      ${TILE_6},
+      ${TILE_7},
+      ${TILE_8},
+      ${TILE_9}
     ]
   }
  }

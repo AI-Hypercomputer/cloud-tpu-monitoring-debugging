@@ -35,6 +35,22 @@ locals {
       TILE_5 = templatefile("${path.module}/dashboard_json/network-bytes.json",
         {
           OUTLIER_COUNT = local.outlier_count
+      }),
+      TILE_6 = templatefile("${path.module}/dashboard_json/dcn-transfer-latency.json",
+        {
+          OUTLIER_COUNT = local.outlier_count
+      }),
+      TILE_7 = templatefile("${path.module}/dashboard_json/collectives-latency.json",
+        {
+          OUTLIER_COUNT = local.outlier_count
+      }),
+      TILE_8 = templatefile("${path.module}/dashboard_json/host-to-device-transfer-latency.json",
+        {
+          OUTLIER_COUNT = local.outlier_count
+      }),
+      TILE_9 = templatefile("${path.module}/dashboard_json/device-to-host-transfer-latency.json",
+        {
+          OUTLIER_COUNT = local.outlier_count
       })
   })
 }
