@@ -59,7 +59,12 @@ class StackTraceTest(absltest.TestCase):
   @unittest.skipIf(not hasattr(signal, 'SIGFPE'), 'Missing signal.SIGFPE')
   def testSigfpeCollectStackTraceTrueTraceCollectedOnCloud(self):
     error = 'Fatal Python error: Floating point exception'
-    self.check_fatal_error(58, error, 'SIGFPE', True)
+    try:
+      self.check_fatal_error(58, error, 'SIGFPE', True)
+    except AssertionError:
+      # error message is different for Python 3.12
+      error = 'Fatal Python error: Floating-point exception'
+      self.check_fatal_error(58, error, 'SIGFPE', True)
 
   @unittest.skipIf(not hasattr(signal, 'SIGILL'), 'Missing signal.SIGILL')
   def testSigillCollectStackTraceTrueTraceCollectedOnCloud(self):
