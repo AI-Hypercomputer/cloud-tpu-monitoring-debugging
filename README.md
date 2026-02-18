@@ -44,12 +44,12 @@ By default, Terraform stores [state](https://www.terraform.io/docs/state/) local
 
 1. In Cloud Shell, create the GCS bucket:
 
-        gsutil mb gs://${GCS_BUCKET_NAME}
+        gcloud storage buckets create gs://${GCS_BUCKET_NAME}
 
 2. Enable [Object Versioning](https://cloud.google.com/storage/docs/object-versioning) to keep the history of your deployments. Enabling Object Versioning increases [storage costs](https://cloud.google.com/storage/pricing), which you can mitigate by configuring
 [Object Lifecycle Management](https://cloud.google.com/storage/docs/lifecycle) to delete old state versions.
 
-        gsutil versioning set on gs://${GCS_BUCKET_NAME}
+        gcloud storage buckets update --versioning gs://${GCS_BUCKET_NAME}
 
 3. Enter the name of GCS bucket created above when you run `terraform init` to initialize Terraform.
 
