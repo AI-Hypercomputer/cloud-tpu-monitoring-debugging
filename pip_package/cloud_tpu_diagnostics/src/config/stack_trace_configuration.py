@@ -25,7 +25,7 @@ class StackTraceConfig:
       occurs in the program. Default is False, which means stack trace will not
       be collected unless collect_stack_trace is set to True.
     stack_trace_to_cloud: enable/disable upload of stack trace to cloud. Default
-      is False, which means stack trace will be displayed on the termial unless
+      is False, which means stack trace will be displayed on the terminal unless
       stack_trace_to_cloud is set to True.
     stack_trace_interval_seconds: time interval in seconds between collection of
       stack trace event. Default is 600, that is 10 minutes.
