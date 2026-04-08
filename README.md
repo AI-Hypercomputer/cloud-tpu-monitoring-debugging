@@ -13,6 +13,9 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  -->
+>[!CAUTION]
+>This repository is archived. For cloud TPU monitoring and diagnostic functionality, please refer to [ML Goodput measurement](https://github.com/AI-Hypercomputer/ml-goodput-measurement), [Cloud Diagnostics XProf](https://github.com/AI-Hypercomputer/cloud-diagnostics-xprof) and [Google Cloud ML Diagnostics](https://github.com/AI-Hypercomputer/google-cloud-mldiagnostics).
+
 # Cloud TPU Monitoring Debugging
 
 ## Overview
